@@ -1,6 +1,3 @@
-type CubeProps = {
-    position: [number, number, number];
-    color?: string;
-};
+import { CubeProps } from '../types';
 export declare const Cube: React.FC<CubeProps>;
-export {};
+export { CubeProps };
