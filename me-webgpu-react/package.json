@@ -8,12 +8,14 @@
   },
   "peerDependencies": {
     "react": "^18.2.0",
-    "matrix-engine-wgpu": "1.2.4"
+    "matrix-engine-wgpu": "1.2.8"
+  },
+  "dependencies": {
+    "wgpu-matrix": "^2.0.0"
   },
   "devDependencies": {
-    "wgpu-matrix": "^3.4.0",
     "react": "^18.2.0",
-    "matrix-engine-wgpu": "1.2.4",
+    "matrix-engine-wgpu": "1.2.8",
     "@types/react": "^19.1.8",
     "typescript": "^5.3.3"
   }
