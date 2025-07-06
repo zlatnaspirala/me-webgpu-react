@@ -5,7 +5,7 @@
     "dev": "vite"
   },
   "dependencies": {
-    "matrix-engine-wgpu": "^1.2.0",
+    "matrix-engine-wgpu": "1.2.4",
     "me-webgpu-react": "file:../me-webgpu-react",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
