@@ -1,0 +1,19 @@
+{
+  "name": "me-webgpu-react",
+  "version": "0.1.3",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "matrix-engine-wgpu": "^1.2.0"
+  },
+  "devDependencies": {
+    "react": "^18.2.0",
+    "matrix-engine-wgpu": "^1.2.0",
+    "@types/react": "^19.1.8",
+    "typescript": "^5.3.3"
+  }
+}
