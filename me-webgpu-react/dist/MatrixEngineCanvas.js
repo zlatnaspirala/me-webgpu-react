@@ -1,10 +1,11 @@
-import React, { useEffect, useRef } from 'react';
-// @ts-ignore
+import React, { useState, useRef, useEffect } from 'react';
 import { MatrixEngineWGPU } from 'matrix-engine-wgpu';
-export const MatrixEngineCanvas = () => {
+import { MatrixEngineWGPUContext } from './MatrixEngineContext';
+export const MatrixEngineCanvas = ({ onReady, children }) => {
     const canvasRef = useRef(null);
+    const [engine, setEngine] = useState(null);
     useEffect(() => {
-        if (canvasRef.current) {
+        if (canvasRef.current && !engine) {
             const app = new MatrixEngineWGPU({
                 useSingleRenderPass: true,
                 canvasSize: 'fullscreen',
@@ -13,9 +14,12 @@ export const MatrixEngineCanvas = () => {
                     responseCoef: 1000
                 }
             }, () => {
-                console.log('Start the engine...');
+                setEngine(app);
+                onReady?.(app);
             });
         }
     }, []);
-    return React.createElement("canvas", { ref: canvasRef, width: 800, height: 600 });
+    return (React.createElement(React.Fragment, null,
+        React.createElement("canvas", { ref: canvasRef, style: { width: '100vw', height: '100vh' } }),
+        engine && (React.createElement(MatrixEngineWGPUContext.Provider, { value: engine }, children))));
 };

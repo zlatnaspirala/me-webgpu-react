@@ -1,13 +1,16 @@
 import React from 'react';
-import { MatrixEngineCanvas } from 'me-webgpu-react';
+import { MatrixEngineCanvas, Cube} from 'me-webgpu-react';
 
-const App = () => {
-  return (
-    <div>
-      <h1>MatrixEngine React Demo</h1>
-      <MatrixEngineCanvas />
-    </div>
-  );
-};
+function App() {
+  const handleEngineReady = (engine: any) => {
+    console.log('HELLO :', engine);
+    // You can now call engine.addBall(), engine.downloadMeshes(), etc.
+
+  };
+
+  return <MatrixEngineCanvas onReady={handleEngineReady} >
+      <Cube position={[0, 1, 0]} color="orange" />
+    </MatrixEngineCanvas>;
+}
 
 export default App;

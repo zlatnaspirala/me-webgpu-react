@@ -1,12 +1,23 @@
-import React, { useEffect, useRef } from 'react';
-// @ts-ignore
-import { MatrixEngineWGPU } from 'matrix-engine-wgpu';
+import React, { useState, useRef, useEffect } from 'react';
+import { MatrixEngineWGPU, downloadMeshes } from 'matrix-engine-wgpu';
+import { PropsWithChildren } from 'react';
+import { MatrixEngineWGPUContext } from './MatrixEngineContext';
 
-export const MatrixEngineCanvas: React.FC=() => {
-  const canvasRef=useRef<HTMLCanvasElement>(null);
+type MatrixEngineCanvasProps={
+  onReady?: (engine: any) => void;
+  useSingleRenderPass?: boolean;
+  canvasSize?: 'fullscreen'|'custom';
+  mainCameraParams?: any;
+};
+
+export type MatrixEngineCanvasPropsWithChildren=PropsWithChildren<MatrixEngineCanvasProps>;
+
+export const MatrixEngineCanvas: React.FC<MatrixEngineCanvasPropsWithChildren>=({ onReady, children }) => {
+  const canvasRef=useRef<HTMLCanvasElement|null>(null);
+  const [engine, setEngine]=useState<any>(null);
 
   useEffect(() => {
-    if(canvasRef.current) {
+    if(canvasRef.current&&!engine) {
       const app=new MatrixEngineWGPU({
         useSingleRenderPass: true,
         canvasSize: 'fullscreen',
@@ -15,10 +26,20 @@ export const MatrixEngineCanvas: React.FC=() => {
           responseCoef: 1000
         }
       }, () => {
-        console.log('Start the engine...')
+        setEngine(app);
+        onReady?.(app);
       });
     }
   }, []);
 
-  return <canvas ref={canvasRef} width={800} height={600} />;
+  return (
+    <>
+      <canvas ref={canvasRef} style={{ width: '100vw', height: '100vh' }} />
+      {engine&&(
+        <MatrixEngineWGPUContext.Provider value={engine}>
+          {children}
+        </MatrixEngineWGPUContext.Provider>
+      )}
+    </>
+  );
 };

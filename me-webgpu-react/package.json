@@ -4,19 +4,22 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "postbuild": "node copy.js"
   },
   "peerDependencies": {
-    "react": "^18.2.0",
-    "matrix-engine-wgpu": "1.2.8"
+    "matrix-engine-wgpu": "1.2.8",
+    "react": "^18.2.0"
   },
   "dependencies": {
     "wgpu-matrix": "^2.0.0"
   },
   "devDependencies": {
-    "react": "^18.2.0",
-    "matrix-engine-wgpu": "1.2.8",
     "@types/react": "^19.1.8",
-    "typescript": "^5.3.3"
+    "fs-extra": "^11.3.0",
+    "matrix-engine-wgpu": "1.2.8",
+    "react": "^18.2.0",
+    "typescript": "^5.3.3",
+    "vite-plugin-static-copy": "^3.1.0"
   }
 }
