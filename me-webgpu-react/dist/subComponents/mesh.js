@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
 import { useMatrixEngineWGPU } from '../MatrixEngineContext';
 import { downloadMeshes } from 'matrix-engine-wgpu';
-export const Cube = ({ name = "myCube1", position = [0, 1, -5], physics = undefined, rotation = [0, 0, 0], rotationSpeed = [0, 0, 0], texturePath = '/res/meshes/cube.png', scale = [1, 1, 1], color = 'white' }) => {
+export const Mesh = ({ name = "myMesh1", position = [0, 1, -5], physics = undefined, rotation = [0, 0, 0], rotationSpeed = [0, 0, 0], texturePath = '/res/meshes/cube.png', scale = [1, 1, 1], meshPath = "./res/meshes/cube.obj", color = 'white' }) => {
     const engine = useMatrixEngineWGPU();
     useEffect(() => {
         const handleAmmoReady = () => {
             // your logic when Ammo is ready
             downloadMeshes({
-                cube: "./res/meshes/cube.obj",
+                mesh: meshPath,
             }, (m) => {
                 engine.addMeshObj({
                     position: { x: position[0], y: position[1], z: position[2] },
@@ -15,7 +15,7 @@ export const Cube = ({ name = "myCube1", position = [0, 1, -5], physics = undefi
                     rotationSpeed: { x: rotationSpeed[0], y: rotationSpeed[1], z: rotationSpeed[2] },
                     texturesPaths: [texturePath],
                     name: name,
-                    mesh: m.cube,
+                    mesh: m.mesh,
                     physics: physics
                 });
             }, { scale: scale });

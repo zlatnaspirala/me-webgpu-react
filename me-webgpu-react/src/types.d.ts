@@ -12,6 +12,9 @@ export type MeshProps={
   rotation: [number, number, number];
   rotationSpeed: [number, number, number];
   color?: string;
+  texturePath: string;
+  scale: [];
+  meshPath?: string;
 };
 
 export declare const Cube: React.FC<MeshProps>;

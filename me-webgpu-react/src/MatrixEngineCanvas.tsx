@@ -6,23 +6,22 @@ import { MatrixEngineWGPUContext } from './MatrixEngineContext';
 type MatrixEngineCanvasProps={
   onReady?: (engine: any) => void;
   useSingleRenderPass?: boolean;
-  canvasSize?: 'fullscreen'|'custom';
+  canvasSize?: 'fullscreen'|{w:number,h:number};
   mainCameraParams?: any;
 };
 
 export type MatrixEngineCanvasPropsWithChildren=PropsWithChildren<MatrixEngineCanvasProps>;
 
-export const MatrixEngineCanvas: React.FC<MatrixEngineCanvasPropsWithChildren>=({ onReady, children }) => {
+export const MatrixEngineCanvas: React.FC<MatrixEngineCanvasPropsWithChildren>=({ onReady, children, canvasSize }) => {
   const containerRef=useRef<HTMLDivElement>(null);
   const [engine, setEngine]=useState<any>(null);
 
   useEffect(() => {
     if(!engine&&containerRef.current) {
       const app=new MatrixEngineWGPU({
-        appendTo: containerRef.current, // only for react wrapper
+        appendTo: containerRef.current,
         useSingleRenderPass: true,
-        // canvasSize: 'fullscreen',
-        canvasSize: {w : '100', h: '100'},
+        canvasSize: canvasSize,
         mainCameraParams: {
           type: 'WASD',
           responseCoef: 1000

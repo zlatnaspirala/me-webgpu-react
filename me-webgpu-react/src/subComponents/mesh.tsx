@@ -3,14 +3,15 @@ import { useMatrixEngineWGPU } from '../MatrixEngineContext';
 import { downloadMeshes } from 'matrix-engine-wgpu';
 import { MeshProps } from '../types';
 
-export const Cube: React.FC<MeshProps>=({
-  name="myCube1",
+export const Mesh: React.FC<MeshProps>=({
+  name="myMesh1",
   position=[0, 1, -5],
   physics=undefined,
   rotation=[0, 0, 0],
   rotationSpeed=[0, 0, 0],
   texturePath='/res/meshes/cube.png',
-  scale=[1,1,1],
+  scale=[1, 1, 1],
+  meshPath="./res/meshes/cube.obj",
   color='white' }) => {
 
   const engine=useMatrixEngineWGPU();
@@ -19,7 +20,7 @@ export const Cube: React.FC<MeshProps>=({
     const handleAmmoReady=() => {
       // your logic when Ammo is ready
       downloadMeshes({
-        cube: "./res/meshes/cube.obj",
+        mesh: meshPath,
       }, (m) => {
         engine.addMeshObj({
           position: { x: position[0], y: position[1], z: position[2] },
@@ -27,7 +28,7 @@ export const Cube: React.FC<MeshProps>=({
           rotationSpeed: { x: rotationSpeed[0], y: rotationSpeed[1], z: rotationSpeed[2] },
           texturesPaths: [texturePath],
           name: name,
-          mesh: m.cube,
+          mesh: m.mesh,
           physics: physics
         })
       }, { scale: scale });

@@ -3,7 +3,10 @@ import { PropsWithChildren } from 'react';
 type MatrixEngineCanvasProps = {
     onReady?: (engine: any) => void;
     useSingleRenderPass?: boolean;
-    canvasSize?: 'fullscreen' | 'custom';
+    canvasSize?: 'fullscreen' | {
+        w: number;
+        h: number;
+    };
     mainCameraParams?: any;
 };
 export type MatrixEngineCanvasPropsWithChildren = PropsWithChildren<MatrixEngineCanvasProps>;

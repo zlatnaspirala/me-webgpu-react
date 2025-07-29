@@ -1,17 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { MatrixEngineWGPU } from 'matrix-engine-wgpu';
 import { MatrixEngineWGPUContext } from './MatrixEngineContext';
-export const MatrixEngineCanvas = ({ onReady, children }) => {
-    // const canvasRef=useRef<HTMLCanvasElement|null>(null);
+export const MatrixEngineCanvas = ({ onReady, children, canvasSize }) => {
     const containerRef = useRef(null);
     const [engine, setEngine] = useState(null);
     useEffect(() => {
         if (!engine && containerRef.current) {
             const app = new MatrixEngineWGPU({
-                appendTo: containerRef.current, // only for react wrapper
+                appendTo: containerRef.current,
                 useSingleRenderPass: true,
-                // canvasSize: 'fullscreen',
-                canvasSize: { w: '100', h: '100' },
+                canvasSize: canvasSize,
                 mainCameraParams: {
                     type: 'WASD',
                     responseCoef: 1000
