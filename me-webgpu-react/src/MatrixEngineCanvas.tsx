@@ -13,7 +13,6 @@ type MatrixEngineCanvasProps={
 export type MatrixEngineCanvasPropsWithChildren=PropsWithChildren<MatrixEngineCanvasProps>;
 
 export const MatrixEngineCanvas: React.FC<MatrixEngineCanvasPropsWithChildren>=({ onReady, children }) => {
-  // const canvasRef=useRef<HTMLCanvasElement|null>(null);
   const containerRef=useRef<HTMLDivElement>(null);
   const [engine, setEngine]=useState<any>(null);
 
@@ -22,7 +21,8 @@ export const MatrixEngineCanvas: React.FC<MatrixEngineCanvasPropsWithChildren>=(
       const app=new MatrixEngineWGPU({
         appendTo: containerRef.current, // only for react wrapper
         useSingleRenderPass: true,
-        canvasSize: 'fullscreen',
+        // canvasSize: 'fullscreen',
+        canvasSize: {w : '100', h: '100'},
         mainCameraParams: {
           type: 'WASD',
           responseCoef: 1000

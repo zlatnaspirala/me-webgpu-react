@@ -6,7 +6,15 @@ export default defineConfig(async () => {
 
   return {
     plugins: [
-      react()
+      react(),
+      viteStaticCopy({
+        targets: [
+          {
+            src: 'node_modules/me-webgpu-react/dist/res',
+            dest: ''
+          }
+        ]
+      })
     ],
     build: {
       outDir: 'dist', // or 'demo-dist' or whatever you want

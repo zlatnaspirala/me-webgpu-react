@@ -10,7 +10,8 @@ export const MatrixEngineCanvas = ({ onReady, children }) => {
             const app = new MatrixEngineWGPU({
                 appendTo: containerRef.current, // only for react wrapper
                 useSingleRenderPass: true,
-                canvasSize: 'fullscreen',
+                // canvasSize: 'fullscreen',
+                canvasSize: { w: '100', h: '100' },
                 mainCameraParams: {
                     type: 'WASD',
                     responseCoef: 1000

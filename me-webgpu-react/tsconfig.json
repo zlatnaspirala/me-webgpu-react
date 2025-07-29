@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "module": "ESNext",  
+    "module": "ESNext",
     "jsx": "react",
     "declaration": true,
     "outDir": "dist",
@@ -9,5 +9,5 @@
     "moduleResolution": "node",
     "esModuleInterop": true
   },
-  "include": ["src"]
+  "include": ["src", "types.d.ts"]
 }

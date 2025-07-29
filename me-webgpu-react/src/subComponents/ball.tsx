@@ -3,9 +3,9 @@ import { useMatrixEngineWGPU } from '../MatrixEngineContext';
 import { downloadMeshes } from 'matrix-engine-wgpu';
 import { MeshProps } from '../types';
 
-export const Cube: React.FC<MeshProps>=({
-  name="myCube1",
-  position=[0, 1, -5],
+export const Ball: React.FC<MeshProps>=({
+  name="myBall1",
+  position=[0, 1, -15],
   physics=undefined,
   rotation=[0, 0, 0],
   rotationSpeed=[0, 0, 0],
@@ -17,7 +17,7 @@ export const Cube: React.FC<MeshProps>=({
     const handleAmmoReady=() => {
       // your logic when Ammo is ready
       downloadMeshes({
-        cube: "./res/meshes/cube.obj",
+        ball: "/res/meshes/ball.obj",
       }, (m) => {
         engine.addMeshObj({
           position: { x: position[0], y: position[1], z: position[2] },
@@ -25,16 +25,14 @@ export const Cube: React.FC<MeshProps>=({
           rotationSpeed: { x: rotationSpeed[0], y: rotationSpeed[1], z: rotationSpeed[2] },
           texturesPaths: ['/res/meshes/cube.png'],
           name: name,
-          mesh: m.cube,
+          mesh: m.ball,
           physics: physics
         })
-        console.log('Test access for obj', engine.matrixAmmo.getBodyByName(name));
+        console.log('Test access for sphere obj', engine.matrixAmmo.getBodyByName(name));
       });
-
     };
 
     window.addEventListener('AmmoReady', handleAmmoReady, { once: true });
-
     return () => {
       window.removeEventListener('AmmoReady', handleAmmoReady);
     };

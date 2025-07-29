@@ -5,13 +5,15 @@ export declare enum TypeOfGeometry {
   Sphepe="Sphepe"
 }
 
-export type CubeProps={
+export type MeshProps={
   name: string;
   position: [number, number, number];
   physics: { enabled: boolean, geometry: TypeOfGeometry };
   rotation: [number, number, number];
+  rotationSpeed: [number, number, number];
   color?: string;
 };
-export declare const Cube: React.FC<CubeProps>;
+
+export declare const Cube: React.FC<MeshProps>;
 
 export {};
