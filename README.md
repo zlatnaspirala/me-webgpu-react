@@ -1,6 +1,12 @@
 # me-webgpu-react
 
 React wrapper for MatrixEngine WebGPU.
+#### Logo: 
+ <img width="320" height="320" src="https://github.com/zlatnaspirala/matrix-engine-wgpu/blob/main/public/res/icons/512.png?raw=true" />
+> Logo includes the official WebGPU logo.
+> **WebGPU logo by [W3C](https://www.w3.org/)**
+> Licensed under [Creative Commons Attribution 4.0](https://www.w3.org/2023/02/webgpu-logos.html)
+
 
 ## Supported: 
  - Cube
@@ -45,8 +51,6 @@ export default App;
 
  Engine name: `matrix-engine-webgpu`
  Source: [Github source](https://github.com/zlatnaspirala/matrix-engine-wgpu)
- Logo: 
- <img width="320" height="320" src="https://github.com/zlatnaspirala/matrix-engine-wgpu/blob/main/public/res/icons/512.png?raw=true" />
 
 ### Licence
 
