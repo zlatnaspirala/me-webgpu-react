@@ -7,11 +7,13 @@ React wrapper for MatrixEngine WebGPU.
 > **WebGPU logo by [W3C](https://www.w3.org/)**
 > Licensed under [Creative Commons Attribution 4.0](https://www.w3.org/2023/02/webgpu-logos.html)
 
-
 ## Supported: 
+You can draw any obj format file.
  - Cube
  - Ball
  - Mesh
+
+Basic physics is supported. Based on ammojs.
 
 ## Usage
 
@@ -23,6 +25,7 @@ function App() {
   const handleEngineReady = (engine: any) => {
     console.log("Main app object [engine] :", engine);
     // You can now call matrix-engien-wbpug top level code etc.
+    // For complex 3d apps you will need to write and organise code here...
   };
 
   return (
