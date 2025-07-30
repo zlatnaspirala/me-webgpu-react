@@ -41,6 +41,11 @@ function App() {
 export default App;
 ```
 
+### About engine
+
+ Engine name: `matrix-engine-webgpu`
+ Source: [Github source](https://github.com/zlatnaspirala/matrix-engine-wgpu)
+
 ### Licence
 
 MIT Licence
