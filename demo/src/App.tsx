@@ -13,7 +13,7 @@ function App() {
     <MatrixEngineCanvas
       onReady={handleEngineReady}
       canvasSize={{ w: 256, h: 256 }}
-      clearColor={'black'}>
+      clearColor={{ r: 1, b: 0.12, g: 0, a: 1 }}>
 
       <Mesh
         position={[0, -2, -10]}
