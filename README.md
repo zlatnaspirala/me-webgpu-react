@@ -41,6 +41,8 @@ function App() {
 export default App;
 ```
 
-### MIT Licence
-### Created by Nikola Lukic zlatnaspirala@gmail.com
-### maximumroulette.com 2025
+### Licence
+
+MIT Licence
+Created by Nikola Lukic zlatnaspirala@gmail.com
+maximumroulette.com 2025
