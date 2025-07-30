@@ -24,7 +24,7 @@ import {MatrixEngineCanvas, Cube} from "me-webgpu-react";
 function App() {
   const handleEngineReady = (engine: any) => {
     console.log("Main app object [engine] :", engine);
-    // You can now call matrix-engien-wbpug top level code etc.
+    // You can now call matrix-engien-webgpu top level code etc.
     // For complex 3d apps you will need to write and organise code here...
   };
 
