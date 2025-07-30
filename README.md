@@ -45,6 +45,8 @@ export default App;
 
  Engine name: `matrix-engine-webgpu`
  Source: [Github source](https://github.com/zlatnaspirala/matrix-engine-wgpu)
+ Logo: 
+ <img width="320" height="320" src="https://github.com/zlatnaspirala/matrix-engine-wgpu/blob/main/public/res/icons/512.png?raw=true" />
 
 ### Licence
 
