@@ -2,17 +2,15 @@ import React, { useState, useRef, useEffect } from 'react';
 import { MatrixEngineWGPU, downloadMeshes } from 'matrix-engine-wgpu';
 import { PropsWithChildren } from 'react';
 import { MatrixEngineWGPUContext } from './MatrixEngineContext';
-
-type MatrixEngineCanvasProps={
-  onReady?: (engine: any) => void;
-  useSingleRenderPass?: boolean;
-  canvasSize?: 'fullscreen'|{w:number,h:number};
-  mainCameraParams?: any;
-};
+import { MatrixEngineCanvasProps } from "./types";
 
 export type MatrixEngineCanvasPropsWithChildren=PropsWithChildren<MatrixEngineCanvasProps>;
 
-export const MatrixEngineCanvas: React.FC<MatrixEngineCanvasPropsWithChildren>=({ onReady, children, canvasSize }) => {
+export const MatrixEngineCanvas: React.FC<MatrixEngineCanvasPropsWithChildren>=({
+  onReady,
+  children,
+  canvasSize,
+  clearColor }) => {
   const containerRef=useRef<HTMLDivElement>(null);
   const [engine, setEngine]=useState<any>(null);
 
@@ -25,7 +23,8 @@ export const MatrixEngineCanvas: React.FC<MatrixEngineCanvasPropsWithChildren>=(
         mainCameraParams: {
           type: 'WASD',
           responseCoef: 1000
-        }
+        },
+        clearColor: clearColor
       }, () => {
         setEngine(app);
         onReady?.(app);

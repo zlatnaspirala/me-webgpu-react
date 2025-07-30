@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { MatrixEngineWGPU } from 'matrix-engine-wgpu';
 import { MatrixEngineWGPUContext } from './MatrixEngineContext';
-export const MatrixEngineCanvas = ({ onReady, children, canvasSize }) => {
+export const MatrixEngineCanvas = ({ onReady, children, canvasSize, clearColor }) => {
     const containerRef = useRef(null);
     const [engine, setEngine] = useState(null);
     useEffect(() => {
@@ -13,7 +13,8 @@ export const MatrixEngineCanvas = ({ onReady, children, canvasSize }) => {
                 mainCameraParams: {
                     type: 'WASD',
                     responseCoef: 1000
-                }
+                },
+                clearColor: clearColor
             }, () => {
                 setEngine(app);
                 onReady?.(app);

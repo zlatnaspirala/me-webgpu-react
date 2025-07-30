@@ -19,4 +19,20 @@ export type MeshProps={
 
 export declare const Cube: React.FC<MeshProps>;
 
+export type MatrixEngineCanvasProps={
+  onReady?: (engine: any) => void;
+  useSingleRenderPass?: boolean;
+  canvasSize?: 'fullscreen'|{ w: number, h: number };
+  mainCameraParams?: any;
+  clearColor: GPUColorDict;
+};
+
+
+export type GPUColorDict = {
+  r: number;
+  g: number;
+  b: number;
+  a: number;
+};
+
 export {};

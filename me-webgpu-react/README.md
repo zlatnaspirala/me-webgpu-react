@@ -2,22 +2,45 @@
 
 React wrapper for MatrixEngine WebGPU.
 
+## Supported: 
+ - Cube
+ - Ball
+ - Mesh
+
 ## Usage
 
 ```tsx
-import React from 'react';
-import { MatrixEngineCanvas, Cube} from 'me-webgpu-react';
+import React from "react";
+import {MatrixEngineCanvas, Cube} from "me-webgpu-react";
 
 function App() {
   const handleEngineReady = (engine: any) => {
-    console.log('Main app object [engine] :', engine);
+    console.log("Main app object [engine] :", engine);
     // You can now call matrix-engien-wbpug top level code etc.
   };
 
-  return <MatrixEngineCanvas onReady={handleEngineReady} >
-      <Cube position={[0, 3, -2]} color="orange" />
-    </MatrixEngineCanvas>;
+  return (
+    <MatrixEngineCanvas
+      onReady={handleEngineReady}
+      canvasSize={{w: 256, h: 256}}
+      clearColor={"black"}>
+      <Mesh
+        position={[0, -2, -10]}
+        rotation={[0, 0, 0]}
+        rotationSpeed={[0, 0, 0]}
+        // physics={{ enabled: false, geometry: "Cube", kinematic: true }}
+        physics={{enabled: false}}
+        texture={"/res/meshes/cube.png"}
+        meshPath="/res/my-meshes/swat.obj"
+        scale={[5, 5, 5]}
+      />
+    </MatrixEngineCanvas>
+  );
 }
 
 export default App;
 ```
+
+### MIT Licence
+### Created by Nikola Lukic zlatnaspirala@gmail.com
+### maximumroulette.com 2025
