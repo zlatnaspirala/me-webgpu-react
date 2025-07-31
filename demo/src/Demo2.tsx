@@ -16,7 +16,7 @@ function Demo2() {
   return (
     <div style={{ display: "flex", justifyContent: "center", flexDirection: "column" }}>
       <h2 style={{ textAlign: "center" }}>Use matrix-engine-webgpu in reactjs apps</h2>
-      <h2 style={{ textAlign: "center" }}>Demo name: Add cube - control via context.</h2>
+      <h2 style={{ textAlign: "center" }}>Demo name: Add cube - Use physics & control via context.</h2>
       <div style={{ display: "flex", justifyContent: "center" }}>
 
         <MatrixEngineCanvas
@@ -26,6 +26,7 @@ function Demo2() {
           mainCameraParams={{ type: 'WASD', responseCoef: 100 }}>
 
           <Cube
+            name="MyPhysicsCube"
             position={[0, 0, -6]}
             rotation={[0, 0, 0]}
             rotationSpeed={[0, 100, 0]}
@@ -35,7 +36,11 @@ function Demo2() {
 
         </MatrixEngineCanvas>
         <button onClick={() => {
-          console.log('useMatrixEngineWGPU =>', engine);
+           console.log('useMatrixEngineWGPU =>');
+           engine.matrixAmmo.getBodyByName('MyPhysicsCube');
+           var CUBE = engine.matrixAmmo.getBodyByName('MyPhysicsCube');
+           CUBE.setLinearVelocity(new engine.matrixAmmo.Ammo.btVector3(0, 10, -2));
+          // matrixAmmo.getBodyByName(('CubePhysics' + x)).MEObject
         }}>Add force to the cube</button>
       </div>
       <p style={{ textAlign: "center" }}>matrix-engine-wgpu source:<a href="https://github.com/zlatnaspirala/matrix-engine-wgpu">github repo</a></p>

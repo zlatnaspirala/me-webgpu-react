@@ -52,7 +52,7 @@ export default App;
 
 ### Access engine
 
- // From any component
+ // From any component in one line...
  const engine=useMatrixEngineWGPU();
 
 ### About engine
