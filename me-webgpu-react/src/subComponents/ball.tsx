@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useMatrixEngineWGPU } from '../MatrixEngineContext';
+import { useMatrixEngineWGPU } from '../MatrixEngineProvider';
 import { downloadMeshes } from 'matrix-engine-wgpu';
 import { MeshProps } from '../types';
 

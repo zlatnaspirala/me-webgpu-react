@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useMatrixEngineWGPU } from '../MatrixEngineContext';
+import { useMatrixEngineWGPU } from '../MatrixEngineProvider';
 import { downloadMeshes } from 'matrix-engine-wgpu';
 export const Ball = ({ name = "myBall1", position = [0, 1, -15], physics = undefined, rotation = [0, 0, 0], rotationSpeed = [0, 0, 0], color = 'white' }) => {
     const engine = useMatrixEngineWGPU();

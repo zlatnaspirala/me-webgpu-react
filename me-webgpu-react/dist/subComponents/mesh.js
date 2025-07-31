@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useMatrixEngineWGPU } from '../MatrixEngineContext';
+import { useMatrixEngineWGPU } from '../MatrixEngineProvider';
 import { downloadMeshes } from 'matrix-engine-wgpu';
 export const Mesh = ({ name = "myMesh1", position = [0, 1, -5], physics = undefined, rotation = [0, 0, 0], rotationSpeed = [0, 0, 0], texturePath = '/res/meshes/cube.png', scale = [1, 1, 1], meshPath = "./res/meshes/cube.obj", color = 'white' }) => {
     const engine = useMatrixEngineWGPU();

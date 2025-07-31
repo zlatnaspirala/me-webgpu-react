@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { MatrixEngineWGPU } from 'matrix-engine-wgpu';
-import { MatrixEngineWGPUContext } from './MatrixEngineContext';
-export const MatrixEngineCanvas = ({ onReady, children, canvasSize, clearColor }) => {
+import { injectEngineExternally, MatrixEngineWGPUContext } from './MatrixEngineProvider';
+export const MatrixEngineCanvas = ({ onReady, children, canvasSize, clearColor, mainCameraParams = { type: 'WASD', responseCoef: 1000 } }) => {
     const containerRef = useRef(null);
     const [engine, setEngine] = useState(null);
     useEffect(() => {
@@ -10,16 +10,14 @@ export const MatrixEngineCanvas = ({ onReady, children, canvasSize, clearColor }
                 appendTo: containerRef.current,
                 useSingleRenderPass: true,
                 canvasSize: canvasSize,
-                mainCameraParams: {
-                    type: 'WASD',
-                    responseCoef: 1000
-                },
+                mainCameraParams: mainCameraParams,
                 clearColor: clearColor
             }, () => {
                 setEngine(app);
+                injectEngineExternally(app);
                 onReady?.(app);
             });
         }
     }, []);
-    return (React.createElement("div", { ref: containerRef, style: { width: '100%', height: '100%' } }, engine && (React.createElement(MatrixEngineWGPUContext.Provider, { value: engine }, children))));
+    return (React.createElement("div", { ref: containerRef }, engine && (React.createElement(MatrixEngineWGPUContext.Provider, { value: engine }, children))));
 };

@@ -50,6 +50,11 @@ function App() {
 export default App;
 ```
 
+### Access engine
+
+ // From any component
+ const engine=useMatrixEngineWGPU();
+
 ### About engine
 
  Engine name: `matrix-engine-webgpu`

@@ -1,10 +1,57 @@
-html, body, #root {
+@font-face {
+  font-family: stormfaze;
+  src: url(../public/res/fonts/stormfaze.ttf);
+}
+
+html,
+body,
+#root {
   margin: 0;
   padding: 0;
   height: 100%;
   overflow: hidden;
+  background: rgb(0, 0, 0);
+  color: rgb(197, 197, 197);
+  font-family: stormfaze;
+}
+
+a {
+  text-decoration: none;
+  color: lime;
 }
 
 canvas {
   display: block;
+}
+
+h2, h4 {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  cursor: default;
+  font-family: 'Courier New', Courier, monospace;
+  color: #00ff00;
+  text-shadow:
+    0 0 2px #00ff00,
+    0 0 4px #00ff00,
+    0 0 6px #00ff00,
+    0 0 8px #00ff00;
+  -webkit-text-stroke: 0.5px black;
+  letter-spacing: 0.05em;
+}
+
+p {
+  padding: 0;
+  margin: 0;
+}
+
+.no-select {
+  user-select: none;
+  -webkit-user-select: none;
+  /* Safari */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* IE10+/Edge */
 }
