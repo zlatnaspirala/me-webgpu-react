@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { addRaycastsAABBListener, rayIntersectsSphere,  getRayFromMouse, addRaycastListener, MatrixEngineCanvas, Mesh, Cube, Ball, useMatrixEngineWGPU } from 'me-webgpu-react';
+import { addRaycastsAABBListener, rayIntersectsSphere, getRayFromMouse, addRaycastListener, MatrixEngineCanvas, Mesh, Cube, Ball, useMatrixEngineWGPU } from 'me-webgpu-react';
 
 function Demo3() {
 
@@ -51,7 +51,7 @@ function Demo3() {
   return (
     <div style={{ display: "flex", justifyContent: "center", flexDirection: "column" }}>
       <h2 style={{ textAlign: "center" }}>Use matrix-engine-webgpu in reactjs apps</h2>
-      <h2 style={{ textAlign: "center" }}>Demo name: Add cube - Use physics & control via context.</h2>
+      <h2 style={{ textAlign: "center" }}>Demo name: Add cube - Raycast hit vs physics & nonphysics scene objects.</h2>
       <div style={{ display: "flex", justifyContent: "center" }}>
 
         <MatrixEngineCanvas
@@ -68,12 +68,12 @@ function Demo3() {
             rotationSpeed={[0, 100, 0]}
             physics={{ enabled: true, geometry: "Cube" }} // kinematic: true
             texture={'/res/meshes/cube.png'}
-            raycast={{ enabled: true, radius: 4 }}
+            raycast={{ enabled: true, radius: 1 }}
           />
 
         </MatrixEngineCanvas>
         <button onClick={() => {
-          console.log('useMatrixEngineWGPU =>');
+          console.log('onClick useMatrixEngineWGPU from any component...');
           engine.matrixAmmo.getBodyByName('MyPhysicsCube');
           var CUBE=engine.matrixAmmo.getBodyByName('MyPhysicsCube');
           CUBE.setLinearVelocity(new engine.matrixAmmo.Ammo.btVector3(0, 10, -2));
