@@ -14,35 +14,22 @@ function Demo3() {
     // addRaycastListener, getRayFromMouse, rayIntersectsSphere
     // addRaycastsAABBListener();
     addRaycastsAABBListener();
-    window.addEventListener('ray.hit.event', (e: Event) => {
-      const customEvent=e as CustomEvent;
-      console.log('Ray hit:', customEvent?.detail.hitObject);
-    });
 
-    // window.addEventListener('click', (event) => {
-    //   const canvas=document.querySelector('canvas');
-    //   const camera=argEngine.cameras.WASD;
-
-    //   const { rayOrigin, rayDirection }=getRayFromMouse(event, canvas, camera);
-
-    //   for(const object of argEngine.mainRenderBundle) {
-    //     if(rayIntersectsSphere(rayOrigin, rayDirection, object.position, object.raycast.radius)) {
-    //       console.log('Object clicked:', object.name);
-    //     }
-    //   }
-    // });
   };
 
   useEffect(() => {
     const canvas=document.getElementById('canvas1');
     if(!canvas) return;
-
     const handler=(e: CustomEvent<{ hitObject: any }>) => {
-      console.log('Canvas Ray Hit:', e.detail.hitObject);
+      console.log('💥Canvas Ray Hit💥:', e.detail.hitObject);
     };
-
     canvas.addEventListener('ray.hit.event', handler as EventListener);
 
+        window.addEventListener('ray.hit.event', (e: Event) => {
+      const customEvent=e as CustomEvent;
+      console.log('💥Ray hit:', customEvent?.detail.hitObject);
+    });
+    
     return () => {
       canvas.removeEventListener('ray.hit.event', handler as EventListener);
     };
