@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useMatrixEngineWGPU } from '../MatrixEngineProvider';
 import { downloadMeshes } from 'matrix-engine-wgpu';
-export const Cube = ({ name = "myCube1", position = [0, 1, -5], physics = undefined, rotation = [0, 0, 0], rotationSpeed = [0, 0, 0], texturePath = '/res/meshes/cube.png', scale = [1, 1, 1], color = 'white' }) => {
+export const Cube = ({ name = "myCube1", position = [0, 1, -5], physics = undefined, rotation = [0, 0, 0], rotationSpeed = [0, 0, 0], texturePath = '/res/meshes/cube.png', scale = [1, 1, 1], raycast = undefined }) => {
     const engine = useMatrixEngineWGPU();
     useEffect(() => {
         const handleAmmoReady = () => {
@@ -16,7 +16,8 @@ export const Cube = ({ name = "myCube1", position = [0, 1, -5], physics = undefi
                     texturesPaths: [texturePath],
                     name: name,
                     mesh: m.cube,
-                    physics: physics
+                    physics: physics,
+                    raycast: raycast
                 });
             }, { scale: scale });
         };

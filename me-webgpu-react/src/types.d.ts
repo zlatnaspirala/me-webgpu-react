@@ -15,6 +15,7 @@ export type MeshProps={
   texturePath: string;
   scale: [];
   meshPath?: string;
+  raycast?: boolean | {enabled: boolean, radius: number};
 };
 
 export declare const Cube: React.FC<MeshProps>;

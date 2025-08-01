@@ -11,7 +11,7 @@ export const Cube: React.FC<MeshProps>=({
   rotationSpeed=[0, 0, 0],
   texturePath='/res/meshes/cube.png',
   scale=[1,1,1],
-  color='white' }) => {
+  raycast=undefined }) => {
 
   const engine=useMatrixEngineWGPU();
 
@@ -28,7 +28,8 @@ export const Cube: React.FC<MeshProps>=({
           texturesPaths: [texturePath],
           name: name,
           mesh: m.cube,
-          physics: physics
+          physics: physics,
+          raycast: raycast
         })
       }, { scale: scale });
     };
