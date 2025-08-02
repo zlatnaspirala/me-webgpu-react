@@ -5,14 +5,6 @@ function Demo4() {
 
   const engine=useMatrixEngineWGPU();
 
-  const handleEngineReady=(argEngine: any) => {
-    console.log('⚗️ MatrixEngineWebGpu: ', argEngine);
-    // Just for dev.
-    (window as any)['app']=argEngine;
-    // MatrixEngine Workspace code here...
-    addRaycastsAABBListener();
-  };
-
   useEffect(() => {
     const handleAmmoReady=() => {
       // your logic when Ammo is ready
@@ -52,7 +44,7 @@ function Demo4() {
   return (
     <div style={{ display: "flex", justifyContent: "center", flexDirection: "column" }}>
       <h2 style={{ textAlign: "center" }}>Use matrix-engine-webgpu in reactjs apps</h2>
-      <p style={{ textAlign: "center" }}>Demo name: Add cube - Raycast hit vs physics & nonphysics scene objects.</p>
+      <p style={{ textAlign: "center" }}>Demo name: Add cube dynamic - Raycast hit vs physics & nonphysics scene objects.</p>
       <div style={{ display: "flex", justifyContent: "center" }}>
 
         <MatrixEngineCanvas
