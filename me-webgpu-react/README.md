@@ -7,7 +7,8 @@ React wrapper for **MatrixEngine WebGPU** — a lightweight WebGPU 3D engine for
 
 ---
 
-#### 🖼️ Logo  
+#### 🖼️ Logo
+
 <img width="320" height="320" src="https://github.com/zlatnaspirala/matrix-engine-wgpu/blob/main/public/res/icons/512.png?raw=true" />
 
 > Logo includes the official WebGPU logo.  
@@ -23,7 +24,7 @@ React wrapper for **MatrixEngine WebGPU** — a lightweight WebGPU 3D engine for
 🧲 Basic **physics support** via [Ammo.js](https://github.com/kripken/ammo.js)  
 🎯 **Raycasting** support — click to detect 3D object intersections  
 🎮 Easy access to the raw engine object  
-⚙️ Flexible control of transforms, rotation, scaling, and textures  
+⚙️ Flexible control of transforms, rotation, scaling, and textures
 
 ---
 
@@ -33,7 +34,8 @@ React wrapper for **MatrixEngine WebGPU** — a lightweight WebGPU 3D engine for
 npm install me-webgpu-react
 
 ```
-or 
+
+or
 
 ```bash
 yarn add me-webgpu-react
@@ -41,10 +43,9 @@ yarn add me-webgpu-react
 
 ⚡ Usage Example
 
-
 ```tsx
 import React from "react";
-import { MatrixEngineCanvas, Mesh } from "me-webgpu-react";
+import {MatrixEngineCanvas, Mesh} from "me-webgpu-react";
 
 function App() {
   const handleEngineReady = (engine: any) => {
@@ -55,14 +56,13 @@ function App() {
   return (
     <MatrixEngineCanvas
       onReady={handleEngineReady}
-      canvasSize={{ w: 256, h: 256 }}
-      clearColor={"black"}
-    >
+      canvasSize={{w: 256, h: 256}}
+      clearColor={"black"}>
       <Mesh
         position={[0, -2, -10]}
         rotation={[0, 0, 0]}
         rotationSpeed={[0, 0, 0]}
-        physics={{ enabled: false }}
+        physics={{enabled: false}}
         texture={"/res/meshes/cube.png"}
         meshPath="/res/my-meshes/swat.obj"
         scale={[5, 5, 5]}
@@ -96,16 +96,59 @@ UI placement in 3D
 
 Physics-based triggers
 
-
 📚 Related Projects
 🔧 Core engine: matrix-engine-wgpu
 
 🧪 Physics: ammo.js
 
+🧪🐍 Concept "From code"
+
+Objects (obj) sequence animation example :
+
+```tsx
+downloadMeshes(
+  makeObjSeqArg({
+    id: "swat-walk-pistol",
+    path: "res/my-meshes/objs-sequence/swat-walk-pistol",
+    from: 1,
+    to: 20,
+  }),
+  (m: any) => {
+    setMeshData(m["swat-walk-pistol"]);
+    engine.addMeshObj({
+      position: {x: 0, y: 0, z: -5},
+      rotation: {x: 0, y: 0, z: 0},
+      rotationSpeed: {x: 0, y: 0, z: 0},
+      texturesPaths: ["./res/meshes/cube.png"],
+      name: "swat-walk-pistol",
+      mesh: m["swat-walk-pistol"],
+      physics: {enabled: false},
+      objAnim: {
+        id: "swat-walk-pistol",
+        meshList: m,
+        currentAni: 1,
+        animations: {
+          active: "walk",
+          walk: {
+            from: 1,
+            to: 20,
+            speed: 3,
+          },
+          // walkPistol: { JUST FOR EXAMPLE ...
+          //   from: 36,
+          //   to: 60,
+          //   speed: 3
+          // }
+        },
+      },
+    });
+  },
+  {scale: [1, 1, 1]}
+);
+```
 
 🌐 Live demo link:
 https://maximumroulette.com/apps/webgpu/react/index.html
-
 
 📄 License
 
