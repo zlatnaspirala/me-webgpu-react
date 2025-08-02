@@ -44,9 +44,11 @@ function Demo5() {
         })
       }, { scale: [1, 1, 1] });
 
-      const getByName=(name: string) => engine.mainRenderBundle.find((obj: any) => obj.name===name);
-      console.log(getByName("swat-walk-pistol") + "<<<<<<<<<<")
-      getByName("swat-walk-pistol").objAnim.play('walk');
+      setTimeout(() => {
+        const getByName=(name: string) => engine.mainRenderBundle.find((obj: any) => obj.name===name);
+        console.log(getByName("swat-walk-pistol")+"<<<<<<<<<<")
+        getByName("swat-walk-pistol").objAnim.play('walk');
+      }, 1000)
     };
 
     window.addEventListener('AmmoReady', handleAmmoReady, { once: true });
