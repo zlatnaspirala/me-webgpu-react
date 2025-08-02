@@ -2,49 +2,49 @@ import { useEffect } from 'react';
 import { useMatrixEngineWGPU } from '../MatrixEngineProvider';
 import { downloadMeshes } from 'matrix-engine-wgpu';
 import { MeshProps } from '../types';
+import { makeObjSeqArg } from '..';
 
-export const objSeqAnim: React.FC<MeshProps>=({
+export const ObjsSeqAnim: React.FC<MeshProps>=({
   name=("myMesh-"+Date.now()),
   position=[0, 1, -5],
   physics=undefined,
   rotation=[0, 0, 0],
   rotationSpeed=[0, 0, 0],
-  texturePath='/res/meshes/cube.png',
+  texturePath='res/meshes/cube.png',
   scale=[1, 1, 1],
-  meshPath="./res/meshes/cube.obj",
-  color='white' }) => {
+  meshPath="res/meshes/cube.obj",
+  objSeqArg=null,
+  objAnim=null }) => {
 
   const engine=useMatrixEngineWGPU();
 
   useEffect(() => {
     const handleAmmoReady=() => {
-      // your logic when Ammo is ready
+      if (objSeqArg === null || objSeqArg === undefined) {
+        console.error('No init argument for objs sequence anim loader...');
+        return;
+      }
+      downloadMeshes(
+        makeObjSeqArg(objSeqArg),
+        (m) => {
+          engine.addMeshObj({
+            position: { x: position[0], y: position[1], z: position[2] },
+            rotation: { x: rotation[0], y: rotation[1], z: rotation[2] },
+            rotationSpeed: { x: rotationSpeed[0], y: rotationSpeed[1], z: rotationSpeed[2] },
+            texturesPaths: [texturePath],
+            name: name,
+            mesh:m[name],
+            physics: physics,
+            objAnim: objAnim
+          })
+          const getByName = (name: string) => engine.mainRenderBundle.find(obj => obj.name === name);
+          getByName(name).objAnim.play('walk');
+        },
+        { scale: [10, 10, 10] }
+      );
 
-      // downloadMeshes(
-      //   makeObjSeqArg({
-      //     id: "swat-walk-pistol",
-      //     path: "res/meshes/objs-sequence/swat-walk-pistol",
-      //     from: 1,
-      //     to: 20
-      //   }),
-      //   onLoadObj,
-      //   { scale: [10, 10, 10] }
-      // );
 
 
-      downloadMeshes({
-        mesh: meshPath,
-      }, (m) => {
-        engine.addMeshObj({
-          position: { x: position[0], y: position[1], z: position[2] },
-          rotation: { x: rotation[0], y: rotation[1], z: rotation[2] },
-          rotationSpeed: { x: rotationSpeed[0], y: rotationSpeed[1], z: rotationSpeed[2] },
-          texturesPaths: [texturePath],
-          name: name,
-          mesh: m.mesh,
-          physics: physics
-        })
-      }, { scale: scale });
     };
 
     window.addEventListener('AmmoReady', handleAmmoReady, { once: true });

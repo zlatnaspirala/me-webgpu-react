@@ -5,6 +5,12 @@ export declare enum TypeOfGeometry {
   Sphepe="Sphepe"
 }
 
+type AnimationRange={
+  from: number;
+  to: number;
+  speed: number;
+};
+
 export type MeshProps={
   name: string;
   canvasId: string;
@@ -16,7 +22,22 @@ export type MeshProps={
   texturePath: string;
   scale: [];
   meshPath?: string;
-  raycast?: boolean | {enabled: boolean, radius: number};
+  raycast?: boolean|{ enabled: boolean, radius: number };
+  objSeqArg?: {
+    id: string,
+    path: string,
+    from: number,
+    to: number
+  },
+  objAnim?: {
+    id: string;
+    meshList: any;
+    currentAni: number;
+    animations: {
+      active: string;
+      [name: string]: string|AnimationRange;
+    };
+  }
 };
 
 export declare const Cube: React.FC<MeshProps>;
@@ -31,7 +52,7 @@ export type MatrixEngineCanvasProps={
 };
 
 
-export type GPUColorDict = {
+export type GPUColorDict={
   r: number;
   g: number;
   b: number;
