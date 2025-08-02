@@ -1,7 +1,7 @@
 @font-face {
   font-family: stormfaze;
   src: url(../public/res/fonts/stormfaze.ttf),
-  url(../res/fonts/stormfaze.ttf);
+    url(../res/fonts/stormfaze.ttf);
 }
 
 html,
@@ -25,13 +25,14 @@ canvas {
   display: block;
 }
 
-h2, h4 , button {
+h2,
+h4 {
   user-select: none;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   cursor: default;
-  font-family: 'Courier New', Courier, monospace;
+  font-family: stormfaze;
   color: #00ff00;
   text-shadow:
     0 0 2px #00ff00,
@@ -43,7 +44,17 @@ h2, h4 , button {
 }
 
 button {
-  background: #4c4c4c;
+  background: #9d9d9d;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  cursor: default;
+  font-family: stormfaze;
+  color: #000000;
+  text-shadow: 0 0 2px #000000, 0 0 4px #00ff00, 0 0 6px #000000, 0 0 8px #000000;
+  -webkit-text-stroke: 0.5px black;
+  letter-spacing: 0.05em;
 }
 
 p {

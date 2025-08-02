@@ -36,6 +36,7 @@ function Demo1() {
       <p style={{ textAlign: "center" }}>matrix-engine-wgpu source:<a href="https://github.com/zlatnaspirala/matrix-engine-wgpu">github repo</a></p>
       <p style={{ textAlign: "center" }}>matrix-engine-wgpu reactjs wrapper source:<a href="https://github.com/zlatnaspirala/me-webgpu-react">github repo</a></p>
       <p style={{ textAlign: "center" }}>npm i me-webgpu-react<a href="https://www.npmjs.com/package/me-webgpu-react">npm service</a></p>
+      <div style={{textAlign: "center"}}> <a href="https://maximumroulette.com"><img width="128px" src="/res/images/logo.png"/></a></div>
     </div>);
 }
 
