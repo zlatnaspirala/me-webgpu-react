@@ -27,8 +27,8 @@ function App() {
             rotationSpeed={[0, 0, 0]}
             // physics={{ enabled: false, geometry: "Cube", kinematic: true }}
             physics={{ enabled: false }}
-            texture={'/res/meshes/cube.png'}
-            meshPath="/res/my-meshes/swat.obj"
+            texturePath={'./res/meshes/cube.png'}
+            meshPath="res/my-meshes/swat.obj"
             scale={[5, 5, 5]} />
 
           <Cube
@@ -37,7 +37,7 @@ function App() {
             rotationSpeed={[0, 100, 0]}
             // physics={{ enabled: false, geometry: "Cube", kinematic: true }}
             physics={{ enabled: false }}
-            texture={'/res/meshes/cube.png'}
+            texturePath={'./res/meshes/cube.png'}
             scale={[2, 2, 2]} />
 
         </MatrixEngineCanvas>

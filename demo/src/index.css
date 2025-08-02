@@ -1,7 +1,8 @@
 @font-face {
   font-family: stormfaze;
-  src: url(../public/res/fonts/stormfaze.ttf),
-    url(../res/fonts/stormfaze.ttf);
+  /* src: url(res/fonts/stormfaze.ttf), */
+  src: url(../public/res/fonts/stormfaze.ttf);
+  /* url(..res/fonts/stormfaze.ttf); */
 }
 
 html,
@@ -14,6 +15,7 @@ body,
   background: rgb(0, 0, 0);
   color: rgb(197, 197, 197);
   font-family: stormfaze;
+  font-size: calc(12px + 0.5vw);
 }
 
 a {
@@ -52,7 +54,7 @@ button {
   cursor: default;
   font-family: stormfaze;
   color: #000000;
-  text-shadow: 0 0 2px #000000, 0 0 4px #00ff00, 0 0 6px #000000, 0 0 8px #000000;
+  text-shadow: 0 0 2px #b4b1b1, 0 0 4px #ffffff, 0 0 6px #bdbdbd, 0 0 8px #ffffff;
   -webkit-text-stroke: 0.5px black;
   letter-spacing: 0.05em;
 }

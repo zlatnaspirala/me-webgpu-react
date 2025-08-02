@@ -1,2 +1,5 @@
 demo/node_modules/**
 me-webgpu-react/node_modules/**
+demo/dist/**
+demo/dist/res/multilang/**
+demo/dist/res/**

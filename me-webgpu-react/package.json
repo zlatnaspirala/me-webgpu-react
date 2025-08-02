@@ -1,6 +1,6 @@
 {
   "name": "me-webgpu-react",
-  "version": "1.3.7",
+  "version": "1.3.81",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -8,7 +8,7 @@
     "postbuild": "node copy.js"
   },
   "peerDependencies": {
-    "matrix-engine-wgpu": "1.3.7",
+    "matrix-engine-wgpu": "1.3.9",
     "react": "^18.3.1"
   },
   "dependencies": {
@@ -18,7 +18,7 @@
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
     "fs-extra": "^11.3.0",
-    "matrix-engine-wgpu": "1.3.7",
+    "matrix-engine-wgpu": "1.3.9",
     "react": "^18.3.1",
     "typescript": "^5.3.3",
     "vite-plugin-static-copy": "^3.1.0"

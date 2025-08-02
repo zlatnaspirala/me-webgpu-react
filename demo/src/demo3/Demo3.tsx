@@ -14,7 +14,7 @@ function Demo3() {
   };
 
   useEffect(() => {
-    const canvas=document.getElementById('canvas1');
+    const canvas=document.getElementById('Demo3');
     if(!canvas) return;
     const handler=(e: CustomEvent<{ hitObject: any }>) => {
       console.log('💥Canvas Ray Hit💥:', e.detail.hitObject);
@@ -32,6 +32,7 @@ function Demo3() {
       <div style={{ display: "flex", justifyContent: "center" }}>
 
         <MatrixEngineCanvas
+          canvasId={"Demo3"}
           onReady={handleEngineReady}
           canvasSize={{ w: 256, h: 256 }}
           clearColor={{ r: 0, b: 0, g: 0, a: 1 }}
@@ -44,7 +45,7 @@ function Demo3() {
             scale={[2, 2, 2]}
             rotationSpeed={[0, 100, 0]}
             physics={{ enabled: true, geometry: "Cube" }} // kinematic: true
-            texture={'/res/meshes/cube.png'}
+            texturePath={'./res/meshes/cube.png'}
             raycast={{ enabled: true, radius: 1 }}
           />
 
@@ -60,7 +61,7 @@ function Demo3() {
       <p style={{ textAlign: "center" }}>matrix-engine-wgpu source:<a href="https://github.com/zlatnaspirala/matrix-engine-wgpu">github repo</a></p>
       <p style={{ textAlign: "center" }}>matrix-engine-wgpu reactjs wrapper source:<a href="https://github.com/zlatnaspirala/me-webgpu-react">github repo</a></p>
       <p style={{ textAlign: "center" }}>npm i me-webgpu-react<a href="https://www.npmjs.com/package/me-webgpu-react">npm service</a></p>
-      <div style={{textAlign: "center"}}> <a href="https://maximumroulette.com"><img width="128px" src="/res/images/logo.png"/></a></div>
+      <div style={{textAlign: "center"}}> <a href="https://maximumroulette.com"><img width="128px" src="res/images/logo.png"/></a></div>
     </div>);
 }
 

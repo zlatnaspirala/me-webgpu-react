@@ -7,6 +7,7 @@ export declare enum TypeOfGeometry {
 
 export type MeshProps={
   name: string;
+  canvasId: string;
   position: [number, number, number];
   physics: { enabled: boolean, geometry: TypeOfGeometry };
   rotation: [number, number, number];
@@ -26,6 +27,7 @@ export type MatrixEngineCanvasProps={
   canvasSize?: 'fullscreen'|{ w: number, h: number };
   mainCameraParams?: any;
   clearColor: GPUColorDict;
+  canvasId: string;
 };
 
 

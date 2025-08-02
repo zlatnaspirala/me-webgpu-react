@@ -9,7 +9,7 @@ export const Mesh: React.FC<MeshProps>=({
   physics=undefined,
   rotation=[0, 0, 0],
   rotationSpeed=[0, 0, 0],
-  texturePath='/res/meshes/cube.png',
+  texturePath='res/meshes/cube.png',
   scale=[1, 1, 1],
   meshPath="./res/meshes/cube.obj",
   color='white' }) => {

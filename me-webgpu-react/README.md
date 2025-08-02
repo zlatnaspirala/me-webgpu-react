@@ -102,6 +102,11 @@ Physics-based triggers
 
 🧪 Physics: ammo.js
 
+
+🌐 Live demo link:
+https://maximumroulette.com/apps/webgpu/react/index.html
+
+
 📄 License
 
 MIT License

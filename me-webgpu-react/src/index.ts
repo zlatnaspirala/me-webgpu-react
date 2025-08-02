@@ -8,5 +8,5 @@ export * from './subComponents/mesh';
 import {addRaycastsAABBListener, addRaycastListener, getRayFromMouse, rayIntersectsSphere} from "matrix-engine-wgpu";
 export {addRaycastsAABBListener, addRaycastListener, getRayFromMouse, rayIntersectsSphere};
 
-import { downloadMeshes } from "matrix-engine-wgpu";
+export { makeObjSeqArg } from "matrix-engine-wgpu";
 export { downloadMeshes } from "matrix-engine-wgpu";
