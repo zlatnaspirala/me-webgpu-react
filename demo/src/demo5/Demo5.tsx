@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { downloadMeshes, addRaycastsAABBListener, rayIntersectsSphere, getRayFromMouse, addRaycastListener, MatrixEngineCanvas, Mesh, Cube, Ball, useMatrixEngineWGPU, makeObjSeqArg } from 'me-webgpu-react';
+import React, { useEffect, useState } from 'react';
+import { downloadMeshes, MatrixEngineCanvas, useMatrixEngineWGPU, makeObjSeqArg } from 'me-webgpu-react';
 
 function Demo5() {
   const engine=useMatrixEngineWGPU();
@@ -46,7 +46,7 @@ function Demo5() {
 
       setTimeout(() => {
         const getByName=(name: string) => engine.mainRenderBundle.find((obj: any) => obj.name===name);
-        console.log(getByName("swat-walk-pistol")+"<<<<<<<<<<")
+        // console.log(getByName("swat-walk-pistol")+"<<<<<<<<<<")
         getByName("swat-walk-pistol").objAnim.play('walk');
       }, 1000)
     };
@@ -72,7 +72,7 @@ function Demo5() {
   return (
     <div style={{ display: "flex", justifyContent: "center", flexDirection: "column" }}>
       <h2 style={{ textAlign: "center" }}>Use matrix-engine-webgpu in reactjs apps</h2>
-      <p style={{ textAlign: "center" }}>Demo name: Add cube dynamic - Raycast hit vs physics & nonphysics scene objects.</p>
+      <p style={{ textAlign: "center" }}>Demo name: Add dynamic/from-code Objs sequence animation (morph).</p>
       <div style={{ display: "flex", justifyContent: "center" }}>
 
         <MatrixEngineCanvas
@@ -81,13 +81,7 @@ function Demo5() {
           clearColor={{ r: 0, b: 0, g: 0, a: 1 }}
           mainCameraParams={{ type: 'WASD', responseCoef: 100 }}></MatrixEngineCanvas>
         <div style={{ display: "flex", flexDirection: "column" }}>
-          {/* <button onClick={() => {
-            console.log('onClick useMatrixEngineWGPU from any component...');
-            engine.matrixAmmo.getBodyByName('myBall1');
-            var CUBE=engine.matrixAmmo.getBodyByName('myBall1');
-            CUBE.setLinearVelocity(new engine.matrixAmmo.Ammo.btVector3(0, 10, -2));
-            // matrixAmmo.getBodyByName(('CubePhysics' + x)).MEObject
-          }}>Add force to the ball</button> */}
+           
         </div>
       </div>
       <p style={{ textAlign: "center" }}>matrix-engine-wgpu source:<a href="https://github.com/zlatnaspirala/matrix-engine-wgpu">github repo</a></p>
