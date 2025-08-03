@@ -101,32 +101,33 @@ function Demo5() {
           clearColor={{ r: 0, b: 0, g: 0, a: 1 }}
           mainCameraParams={{ type: 'WASD', responseCoef: 100 }}></MatrixEngineCanvas>
         <div style={{ display: "flex", flexDirection: "column" }}>
-          {(meshesData2===null? "IT IS NULL":<ObjsSeqAnim name={'swat-walk-pistol2'}
-            objSeqArg={{
-              id: "swat-walk-pistol2",
-              path: "res/my-meshes/objs-sequence/swat-walk-pistol",
-              from: 1,
-              to: 20
-            }}
-            objAnim={{
-              id: "swat-walk-pistol2",
-              meshList: meshesData2,
-              currentAni: 1,
-              animations: {
-                active: 'walk',
-                walk: {
-                  from: 1,
-                  to: 20,
-                  speed: 3
-                },
-                // walkPistol: { JUST FOR EXAMPLE ...
-                //   from: 36,
-                //   to: 60,
-                //   speed: 3
-                // }
-              }
-            }}
-          />)}
+          {(meshesData2===null? null:
+            <ObjsSeqAnim name={'swat-walk-pistol2'}
+              objSeqArg={{
+                id: "swat-walk-pistol2",
+                path: "res/my-meshes/objs-sequence/swat-walk-pistol",
+                from: 1,
+                to: 20
+              }}
+              objAnim={{
+                id: "swat-walk-pistol2",
+                meshList: meshesData2,
+                currentAni: 1,
+                animations: {
+                  active: 'walk',
+                  walk: {
+                    from: 1,
+                    to: 20,
+                    speed: 3
+                  },
+                  // walkPistol: { JUST FOR EXAMPLE ...
+                  //   from: 36,
+                  //   to: 60,
+                  //   speed: 3
+                  // }
+                }
+              }}
+            />)}
         </div>
       </div>
       <p style={{ textAlign: "center" }}>matrix-engine-wgpu source:<a href="https://github.com/zlatnaspirala/matrix-engine-wgpu">github repo</a></p>
