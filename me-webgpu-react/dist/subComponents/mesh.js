@@ -20,7 +20,7 @@ export const Mesh = ({ name = "myMesh1", position = [0, 1, -5], physics = undefi
                 });
             }, { scale: scale });
         };
-        window.addEventListener('AmmoReady', handleAmmoReady, { once: true });
+        window.addEventListener('AmmoReady', handleAmmoReady, { once: false });
         return () => {
             window.removeEventListener('AmmoReady', handleAmmoReady);
         };

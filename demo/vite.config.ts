@@ -23,7 +23,9 @@ export default defineConfig(async () => {
         input: {
           demo1: path.resolve(__dirname, 'demo1.html'),
           demo2: path.resolve(__dirname, 'demo2.html'),
-          // add more demos here
+          demo3: path.resolve(__dirname, 'demo3.html'),
+          demo4: path.resolve(__dirname, 'demo4.html'),
+          demo5: path.resolve(__dirname, 'demo5.html'),
         },
         output: {
           // Optional: keep folder structure in dist

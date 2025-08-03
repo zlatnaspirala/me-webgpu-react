@@ -37,7 +37,7 @@ function Demo4() {
       }, { scale: [1, 1, 1] });
     };
 
-    window.addEventListener('AmmoReady', handleAmmoReady, { once: true });
+    window.addEventListener('AmmoReady', handleAmmoReady, { once: false });
     return () => {
       window.removeEventListener('AmmoReady', handleAmmoReady);
     };

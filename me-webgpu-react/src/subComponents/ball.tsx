@@ -32,7 +32,7 @@ export const Ball: React.FC<MeshProps>=({
       });
     };
 
-    window.addEventListener('AmmoReady', handleAmmoReady, { once: true });
+    window.addEventListener('AmmoReady', handleAmmoReady, { once: false });
     return () => {
       window.removeEventListener('AmmoReady', handleAmmoReady);
     };

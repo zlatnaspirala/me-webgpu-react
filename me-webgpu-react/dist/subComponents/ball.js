@@ -21,7 +21,7 @@ export const Ball = ({ name = "myBall1", position = [0, 1, -15], physics = undef
                 console.log('Test access for sphere obj', engine.matrixAmmo.getBodyByName(name));
             });
         };
-        window.addEventListener('AmmoReady', handleAmmoReady, { once: true });
+        window.addEventListener('AmmoReady', handleAmmoReady, { once: false });
         return () => {
             window.removeEventListener('AmmoReady', handleAmmoReady);
         };
