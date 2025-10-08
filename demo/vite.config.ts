@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import path from 'node:path'; // modern & explicit
+import path from 'node:path';
 
 export default defineConfig(async () => {
   const { viteStaticCopy }=await import('vite-plugin-static-copy');
@@ -18,7 +18,21 @@ export default defineConfig(async () => {
         ]
       })
     ],
+    resolve: {
+      alias: {
+        // 🔧 Force both packages to use the same module instance
+        'matrix-engine-wgpu': path.resolve(__dirname, './node_modules/matrix-engine-wgpu/index.js'),
+        // 'me-webgpu-react': path.resolve(__dirname, '../me-webgpu-react/src/index.ts'),
+        // ^ optional: if you want live local src, or use dist if prebuilt
+      }
+    },
     build: {
+      target: 'esnext',
+       minify: false, 
+      // minify: 'esbuild',
+      esbuild: {
+        keepNames: true
+      },
       rollupOptions: {
         input: {
           index: path.resolve(__dirname, 'index.html'),
@@ -27,17 +41,68 @@ export default defineConfig(async () => {
           demo3: path.resolve(__dirname, 'demo3.html'),
           demo4: path.resolve(__dirname, 'demo4.html'),
           demo5: path.resolve(__dirname, 'demo5.html'),
-          demo6: path.resolve(__dirname, 'demo6.html'),
+          demo6: path.resolve(__dirname, 'demo6.html')
         },
         output: {
-          // Optional: keep folder structure in dist
           entryFileNames: `[name]/assets/[name].[hash].js`,
           chunkFileNames: `[name]/assets/[name].[hash].js`,
-          assetFileNames: `[name]/assets/[name].[hash].[ext]`,
+          assetFileNames: `[name]/assets/[name].[hash].[ext]`
         }
       },
       outDir: 'dist',
-      emptyOutDir: true,
+      emptyOutDir: true
     }
   };
 });
+
+
+
+// import { defineConfig } from 'vite';
+// import react from '@vitejs/plugin-react';
+// import path from 'node:path'; // modern & explicit
+
+// export default defineConfig(async () => {
+//   const { viteStaticCopy }=await import('vite-plugin-static-copy');
+
+//   return {
+//     base: './',
+//     plugins: [
+//       react(),
+//       viteStaticCopy({
+//         targets: [
+//           {
+//             src: 'node_modules/me-webgpu-react/dist/res',
+//             dest: ''
+//           }
+//         ]
+//       })
+//     ],
+//     build: {
+//       rollupOptions: {
+//         external: ['matrix-engine-wgpu'], //, 'me-webgpu-react'],
+//         input: {
+//           index: path.resolve(__dirname, 'index.html'),
+//           demo1: path.resolve(__dirname, 'demo1.html'),
+//           demo2: path.resolve(__dirname, 'demo2.html'),
+//           demo3: path.resolve(__dirname, 'demo3.html'),
+//           demo4: path.resolve(__dirname, 'demo4.html'),
+//           demo5: path.resolve(__dirname, 'demo5.html'),
+//           demo6: path.resolve(__dirname, 'demo6.html'),
+//         },
+//         output: {
+//           // Optional: keep folder structure in dist
+//           entryFileNames: `[name]/assets/[name].[hash].js`,
+//           chunkFileNames: `[name]/assets/[name].[hash].js`,
+//           assetFileNames: `[name]/assets/[name].[hash].[ext]`,
+//         }
+//       },
+//       outDir: 'dist',
+//       emptyOutDir: true,
+//       target: 'esnext',
+//       minify: 'esbuild',
+//       esbuild: {
+//         keepNames: true
+//       },
+//     }
+//   };
+// });

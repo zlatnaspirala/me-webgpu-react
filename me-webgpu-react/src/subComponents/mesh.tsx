@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useMatrixEngineWGPU } from '../MatrixEngineProvider';
 import { downloadMeshes } from 'matrix-engine-wgpu';
-import { MeshProps } from '../types';
+import { MeshProps } from './my-types';
 
 export const Mesh: React.FC<MeshProps>=({
   name="myMesh1",

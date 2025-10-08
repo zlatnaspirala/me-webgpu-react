@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { MatrixEngineWGPU, downloadMeshes } from 'matrix-engine-wgpu';
 import { PropsWithChildren } from 'react';
-import { MatrixEngineCanvasProps } from "./types";
+import { MatrixEngineCanvasProps } from "./my-types";
 import { injectEngineExternally, MatrixEngineWGPUContext, MatrixEngineProvider } from './MatrixEngineProvider';
 
 export type MatrixEngineCanvasPropsWithChildren=PropsWithChildren<MatrixEngineCanvasProps>;

@@ -1,8 +1,8 @@
 export { MatrixEngineProvider, useMatrixEngineWGPU } from './MatrixEngineProvider';
 export { MatrixEngineCanvas } from './MatrixEngineCanvas';
-export * from './subComponents/cube';
-export * from './subComponents/ball';
-export * from './subComponents/mesh';
+export { Cube } from './subComponents/cube';
+export { Ball } from './subComponents/ball';
+export { Mesh } from './subComponents/mesh';
 export { ObjsSeqAnim } from './subComponents/objSeqAnim';
 
 import { addRaycastsAABBListener, rayIntersectsAABB, addRaycastListener, getRayFromMouse, rayIntersectsSphere } from "matrix-engine-wgpu";

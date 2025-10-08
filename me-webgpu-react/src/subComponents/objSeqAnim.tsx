@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { useMatrixEngineWGPU } from '../MatrixEngineProvider';
 import { downloadMeshes } from 'matrix-engine-wgpu';
-import { MeshProps } from '../types';
+import { MeshProps } from './my-types';
 import { makeObjSeqArg } from '..';
 
 export const ObjsSeqAnim: React.FC<MeshProps>=({
