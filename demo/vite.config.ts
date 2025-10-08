@@ -21,11 +21,13 @@ export default defineConfig(async () => {
     build: {
       rollupOptions: {
         input: {
+          index: path.resolve(__dirname, 'index.html'),
           demo1: path.resolve(__dirname, 'demo1.html'),
           demo2: path.resolve(__dirname, 'demo2.html'),
           demo3: path.resolve(__dirname, 'demo3.html'),
           demo4: path.resolve(__dirname, 'demo4.html'),
           demo5: path.resolve(__dirname, 'demo5.html'),
+          demo6: path.resolve(__dirname, 'demo6.html'),
         },
         output: {
           // Optional: keep folder structure in dist
