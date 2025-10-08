@@ -1,6 +1,6 @@
 {
   "name": "me-webgpu-react",
-  "version": "1.5.5",
+  "version": "1.5.51",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
