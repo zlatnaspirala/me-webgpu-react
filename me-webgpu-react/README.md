@@ -25,6 +25,7 @@ React wrapper for **MatrixEngine WebGPU** — a lightweight WebGPU 3D engine for
 🎯 **Raycasting** support — click to detect 3D object intersections  
 🎮 Easy access to the raw engine object  
 ⚙️ Flexible control of transforms, rotation, scaling, and textures
+🧊 GLB binary file loader with animation skeletal (bvh) support (from code for now)
 
 ---
 
@@ -147,6 +148,32 @@ downloadMeshes(
 );
 ```
 
+🖼️ GLB loader
+
+Material (same for addMeshObj) enumerators:
+ material: {type: "standard", useTextureFromGlb: true},
+ material: {type: "normalmap", useTextureFromGlb: true},
+ material: {type: "power", useTextureFromGlb: true},
+ material: {type: "pong", useTextureFromGlb: true},
+
+See demo6
+```js
+var glbFile11 = await fetch("res/my-meshes/glb/woman1.glb").then(res =>
+  res.arrayBuffer().then(buf => uploadGLBModel(buf, engine.device))
+);
+engine.addGlbObj(
+  {
+    material: {type: "normalmap", useTextureFromGlb: true},
+    scale: [20, 20, 20],
+    position: {x: 0, y: -4, z: -28},
+    name: "woman1",
+    texturesPaths: ["./res/images/logo.png"],
+  },
+  null,
+  glbFile11
+);
+```
+
 🌐 Live demo link:
 https://maximumroulette.com/apps/webgpu/react/index.html
 
@@ -156,3 +183,7 @@ MIT License
 Created by Nikola Lukić
 ✉️ zlatnaspirala@gmail.com
 🌐 maximumroulette.com
+
+Credits
+ - 3d rig animations downloaded from great mixamo.com service.
+ - All other reference you can find on engine readme file.
