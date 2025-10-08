@@ -24,8 +24,8 @@ React wrapper for **MatrixEngine WebGPU** — a lightweight WebGPU 3D engine for
 🧲 Basic **physics support** via [Ammo.js](https://github.com/kripken/ammo.js)  
 🎯 **Raycasting** support — click to detect 3D object intersections  
 🎮 Easy access to the raw engine object  
-⚙️ Flexible control of transforms, rotation, scaling, and textures
-🧊 GLB binary file loader with animation skeletal (bvh) support (from code for now)
+⚙️ Flexible control of transforms, rotation, scaling, and textures  
+🧊 GLB binary file loader with animation skeletal (bvh) support (from code for now)  
 
 ---
 
