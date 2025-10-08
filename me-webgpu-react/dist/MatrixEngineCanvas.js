@@ -16,7 +16,8 @@ export const MatrixEngineCanvas = ({ onReady, children, canvasId = "canvas1", ca
             }, () => {
                 setEngine(app);
                 injectEngineExternally(app);
-                onReady?.(app);
+                app.addLight();
+                setTimeout(() => { onReady?.(app); }, 1000);
             });
         }
     }, []);

@@ -1,30 +1,46 @@
 import React, { useEffect, useState } from 'react';
-import { downloadMeshes, MatrixEngineCanvas, useMatrixEngineWGPU, makeObjSeqArg, ObjsSeqAnim } from 'me-webgpu-react';
+import { addRaycastsAABBListener, downloadMeshes, MatrixEngineCanvas, useMatrixEngineWGPU, makeObjSeqArg, ObjsSeqAnim } from 'me-webgpu-react';
+
+function getRandomInt(min: number, max: number) {
+  if(max<=min) {
+    throw new Error("Max must be greater than min");
+  }
+
+  const range=max-min+1;
+  const maxValid=Math.floor(256/range)*range;
+
+  let randomByte=new Uint8Array(1);
+
+  while(true) {
+    crypto.getRandomValues(randomByte); // Uses window.crypto (secure)
+    if(randomByte[0]<maxValid) {
+      return min+(randomByte[0]%range);
+    }
+  }
+}
 
 function Demo5() {
   const engine=useMatrixEngineWGPU();
   const [meshesData, setMeshesData]=useState(null);
   const [meshesData2, setMeshesData2]=useState(null);
+  const getByName=(name: string) => engine.mainRenderBundle.find((obj: any) => obj.name===name);
 
   useEffect(() => {
-
-
     const handleAmmoReady=() => {
       // your logic when Ammo is ready
-
-      if(engine===null) {
-        console.log('engine=', engine)
-        return;
-      }
+      if(engine===null) { return; }
+      (window as any).app=engine;
+      // If you have multu engine instance in same page - arg is canvas id!
+      addRaycastsAABBListener("Demo5");
 
       downloadMeshes(makeObjSeqArg({
-        id: "swat-walk-pistol2",
+        id: "swat-walk2-pistol",
         path: "res/my-meshes/objs-sequence/swat-walk-pistol",
         from: 1,
         to: 20
       }), (m: any) => {
         setMeshesData2(m);
-      })
+      }, { scale: [4, 4, 4] })
 
       downloadMeshes(makeObjSeqArg({
         id: "swat-walk-pistol",
@@ -34,10 +50,11 @@ function Demo5() {
       }), (m: any) => {
         setMeshesData(m);
         engine.addMeshObj({
-          position: { x: 0, y: 0, z: -5 },
+          position: { x: 4, y: 0, z: -5 },
           rotation: { x: 0, y: 0, z: 0 },
           rotationSpeed: { x: 0, y: 0, z: 0 },
-          texturesPaths: ['./res/meshes/cube.png'],
+          texturesPaths: ['./res/my-meshes/swat.png'],
+          raycast: { enabled: true, radius: 1 },
           name: "swat-walk-pistol",
           mesh: m["swat-walk-pistol"],
           physics: { enabled: false },
@@ -59,29 +76,31 @@ function Demo5() {
               // }
             }
           }
-        })
-      }, { scale: [1, 1, 1] });
-
-      setTimeout(() => {
-        const getByName=(name: string) => engine.mainRenderBundle.find((obj: any) => obj.name===name);
-        // console.log(getByName("swat-walk-pistol")+"<<<<<<<<<<")
+        });
         getByName("swat-walk-pistol").objAnim.play('walk');
-
-        getByName("swat-walk-pistol2").objAnim.play('walk');
-      }, 1000)
+        setTimeout(() => {
+          engine.cameras.WASD.yaw=-0.086;
+          engine.cameras.WASD.pitch=-0.06;
+          engine.cameras.WASD.position[1]=5;
+          engine.lightContainer[0].position[1]=100;
+        }, 2500)
+      }, { scale: [4, 4, 4] });
     };
 
     window.addEventListener('AmmoReady', handleAmmoReady, { once: false });
     return () => {
-      // window.removeEventListener('AmmoReady', handleAmmoReady);
+      window.removeEventListener('AmmoReady', handleAmmoReady);
     };
   }, [engine]);
 
   useEffect(() => {
-    const canvas=document.getElementById('Demo4');
+    const canvas=document.getElementById('Demo5');
     if(!canvas) return;
     const handler=(e: CustomEvent<{ hitObject: any }>) => {
       console.log('💥Canvas Ray Hit💥:', e.detail.hitObject);
+      e.detail.hitObject.globalAmbient[0]=getRandomInt(0, 2);
+      e.detail.hitObject.globalAmbient[1]=getRandomInt(0, 2);
+      e.detail.hitObject.globalAmbient[2]=getRandomInt(0, 2);
     };
     canvas.addEventListener('ray.hit.event', handler as EventListener);
     return () => {
@@ -91,26 +110,30 @@ function Demo5() {
 
   return (
     <div style={{ display: "flex", justifyContent: "center", flexDirection: "column" }}>
-      <h2 style={{ textAlign: "center" }}>Use matrix-engine-webgpu in reactjs apps</h2>
-      <p style={{ textAlign: "center" }}>Demo name: Add dynamic/from-code Objs sequence animation (morph).</p>
+      <h3 style={{ textAlign: "center" }}>Use matrix-engine-webgpu in reactjs apps</h3>
+      <p style={{ textAlign: "center" }}>Demo name: Add dynamic/from-code AND from render tag Objs sequence animation (morph).</p>
       <div style={{ display: "flex", justifyContent: "center" }}>
 
         <MatrixEngineCanvas
           canvasId={"Demo5"}
-          canvasSize={{ w: 256, h: 256 }}
+          canvasSize={{ w: 512, h: 512 }}
           clearColor={{ r: 0, b: 0, g: 0, a: 1 }}
           mainCameraParams={{ type: 'WASD', responseCoef: 100 }}></MatrixEngineCanvas>
         <div style={{ display: "flex", flexDirection: "column" }}>
           {(meshesData2===null? null:
-            <ObjsSeqAnim name={'swat-walk-pistol2'}
+            <ObjsSeqAnim
+              name={'swat-walk2-pistol'}
+              physics={{ enabled: false }}
+              texturesPaths={['./res/my-meshes/swat.png']}
+              raycast={{ enabled: true, radius: 1 }}
               objSeqArg={{
-                id: "swat-walk-pistol2",
+                id: "swat-walk2-pistol",
                 path: "res/my-meshes/objs-sequence/swat-walk-pistol",
                 from: 1,
                 to: 20
               }}
               objAnim={{
-                id: "swat-walk-pistol2",
+                id: "swat-walk2-pistol",
                 meshList: meshesData2,
                 currentAni: 1,
                 animations: {

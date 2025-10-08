@@ -10,3 +10,4 @@ export { addRaycastsAABBListener, addRaycastListener, rayIntersectsAABB, getRayF
 
 export { makeObjSeqArg } from "matrix-engine-wgpu";
 export { downloadMeshes } from "matrix-engine-wgpu";
+export { uploadGLBModel } from "matrix-engine-wgpu";

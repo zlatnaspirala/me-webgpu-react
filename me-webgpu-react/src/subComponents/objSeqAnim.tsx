@@ -13,6 +13,7 @@ export const ObjsSeqAnim: React.FC<MeshProps>=({
   texturePath='res/meshes/cube.png',
   scale=[1, 1, 1],
   meshPath="res/meshes/cube.obj",
+  raycast= undefined,
   objSeqArg=null,
   objAnim=null }) => {
   const engine=useMatrixEngineWGPU();
@@ -23,8 +24,6 @@ export const ObjsSeqAnim: React.FC<MeshProps>=({
       console.error('No init argument for objs sequence anim loader...');
       return;
     }
-
-    console.error('DEBUG for objs sequence anim loader...');
     downloadMeshes(
       makeObjSeqArg(objSeqArg),
       (m) => {
@@ -36,10 +35,11 @@ export const ObjsSeqAnim: React.FC<MeshProps>=({
           name: name,
           mesh: m[name],
           physics: physics,
-          objAnim: objAnim
+          objAnim: objAnim,
+          raycast: raycast
         })
         const getByName=(name: string) => engine.mainRenderBundle.find(obj => obj.name===name);
-        getByName(name).objAnim.play('walk');
+        setTimeout(()=> {getByName(name).objAnim.play('walk');}, 100);
       },
       { scale: [10, 10, 10] }
     );
@@ -48,9 +48,8 @@ export const ObjsSeqAnim: React.FC<MeshProps>=({
   useEffect(() => {
     if(hasRun.current) return;
     hasRun.current=true;
-    console.error('ONCE  objs sequence anim loader...');
-    // 👇 your logic here
-    handleAmmoReady();
+    // 👇 your logic here - symbolic async
+    setTimeout(()=>handleAmmoReady(),100);
   }, []);
 
   return null;

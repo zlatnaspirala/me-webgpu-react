@@ -46,7 +46,7 @@ canvas {
   display: block;
 }
 
-h2,
+h2, h3,
 h4 {
   padding: 1px 1px 1px 1px;
   user-select: none;

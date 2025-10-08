@@ -11,10 +11,10 @@ function Demo4() {
       position: { x: 0, y: 0, z: -5 },
       rotation: { x: 0, y: 0, z: 0 },
       rotationSpeed: { x: 0, y: 0, z: 0 },
-      texturesPaths: ['./res/meshes/cube.png'],
+      texturesPaths: ['./res/images/ball.png'],
       name: "test",
       mesh: meshData,
-      physics: { enabled: true, geometry: "Sphere" }
+      physics: { enabled: true, geometry: "Sphere", radius: 2 }
     })
   }
 
@@ -29,12 +29,18 @@ function Demo4() {
           position: { x: 0, y: 0, z: -5 },
           rotation: { x: 0, y: 0, z: 0 },
           rotationSpeed: { x: 0, y: 0, z: 0 },
-          texturesPaths: ['./res/meshes/cube.png'],
+          texturesPaths: ['./res/images/ball.png'],
           name: "myBall1",
           mesh: m.ball,
-          physics: { enabled: true, geometry: "Sphere" }
+          physics: { enabled: true, geometry: "Sphere", radius: 2 }
         })
-      }, { scale: [1, 1, 1] });
+      }, { scale: [2, 2, 2] });
+
+      setTimeout(() => {
+        engine.cameras.WASD.yaw=-0.086;
+        engine.cameras.WASD.pitch=-0.06;
+        engine.lightContainer[0].position[1]=100;
+      }, 400)
     };
 
     window.addEventListener('AmmoReady', handleAmmoReady, { once: false });
@@ -57,13 +63,13 @@ function Demo4() {
 
   return (
     <div style={{ display: "flex", justifyContent: "center", flexDirection: "column" }}>
-      <h2 style={{ textAlign: "center" }}>Use matrix-engine-webgpu in reactjs apps</h2>
+      <h3 style={{ textAlign: "center" }}>Use matrix-engine-webgpu in reactjs apps</h3>
       <p style={{ textAlign: "center" }}>Demo name: Add cube dynamic - Raycast hit vs physics & nonphysics scene objects.</p>
       <div style={{ display: "flex", justifyContent: "center" }}>
 
         <MatrixEngineCanvas
           canvasId={"Demo4"}
-          canvasSize={{ w: 256, h: 256 }}
+          canvasSize={{ w: 512, h: 512 }}
           clearColor={{ r: 0, b: 0, g: 0, a: 1 }}
           mainCameraParams={{ type: 'WASD', responseCoef: 100 }}></MatrixEngineCanvas>
         <div style={{ display: "flex", flexDirection: "column" }}>

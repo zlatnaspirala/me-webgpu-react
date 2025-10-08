@@ -9,7 +9,7 @@ export type MatrixEngineCanvasPropsWithChildren=PropsWithChildren<MatrixEngineCa
 export const MatrixEngineCanvas: React.FC<MatrixEngineCanvasPropsWithChildren>=({
   onReady,
   children,
-  canvasId = "canvas1",
+  canvasId="canvas1",
   canvasSize,
   clearColor,
   mainCameraParams={ type: 'WASD', responseCoef: 1000 } }) => {
@@ -24,11 +24,12 @@ export const MatrixEngineCanvas: React.FC<MatrixEngineCanvasPropsWithChildren>=(
         canvasSize: canvasSize,
         mainCameraParams: mainCameraParams,
         clearColor: clearColor,
-        canvasId:canvasId
+        canvasId: canvasId
       }, () => {
         setEngine(app);
         injectEngineExternally(app);
-        onReady?.(app);
+        app.addLight();
+        setTimeout(() => { onReady?.(app); }, 1000);
       });
     }
   }, []);
