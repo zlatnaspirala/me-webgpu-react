@@ -1,34 +1,366 @@
 # me-webgpu-react
 
-React wrapper for **MatrixEngine WebGPU / The Beast**. Version 2.0.0 aligns the wrapper with the MatrixEngine 2.x public API and exposes the engine's complete top-level named export surface.
+**React integration for MatrixEngine WebGPU (The Beast).** This package combines a small set of React scene helpers with the full named-export API of `matrix-engine-wgpu`.
 
-## What's new in 2.x
+> **Version 2.x** — this wrapper targets MatrixEngine 2.x. The engine's `index.js` is the source of truth for available engine exports; use the version installed in your project when checking signatures and behavior.
 
-- Re-export the complete public API from `matrix-engine-wgpu` (engine classes, cameras, loaders, effects, physics/collision, navigation, networking, splat tools and utilities).
-- Keep React helpers: `MatrixEngineCanvas`, `MatrixEngineProvider`, `useMatrixEngineWGPU`, `Cube`, `Ball`, `Mesh` and `ObjsSeqAnim`.
-- Update the engine peer dependency to `^2.0.1`.
-- Refresh the React showcase with feature cards and selectable live demos.
-- Correct the geometry enum spelling to `Sphere` and improve optional prop typing.
+- [Engine repository](https://github.com/zlatnaspirala/matrix-engine-wgpu)
+- [React wrapper repository](https://github.com/zlatnaspirala/me-webgpu-react)
+- [Engine API documentation](https://maximumroulette.com/apps/webgpu/api-docs/)
 
-The wrapper re-exports the engine entry point rather than maintaining a manually curated copy of its exports. Newly added named exports in the engine become available through this package after the engine dependency is updated.
+## Contents
 
-## Install
+- [Features](#features)
+- [Installation](#installation)
+- [Local engine development](#local-engine-development)
+- [Quick start](#quick-start)
+- [React API](#react-api)
+- [Complete engine API reference](#complete-engine-api-reference)
+- [Engine lifecycle and usage notes](#engine-lifecycle-and-usage-notes)
+- [Showcase](#showcase)
+- [Build and publish](#build-and-publish)
+- [Browser requirements](#browser-requirements)
+- [License](#license)
+
+## Features
+
+- React context and hook for accessing the active engine instance.
+- Canvas host component that initializes MatrixEngineWGPU.
+- Convenience components for Cube, Ball, Mesh and OBJ-sequence animation.
+- Re-export of the complete engine public named-export surface.
+- React/Vite presentation page with example previews.
+
+The wrapper does **not** replace the engine's own scene, GPU, physics or asset lifecycle. It makes the engine available in React and provides a few convenient components.
+
+## Installation
+
+Install the wrapper and its engine peer dependency:
 
 ```bash
 npm install me-webgpu-react matrix-engine-wgpu
 ```
 
-React 18 and 19 are supported by the peer dependency range.
+React 18 or React 19 is supported by the declared peer dependency range. Install a compatible React version in your application.
 
 ## Local engine development
 
-This repository expects the engine source checkout to be a sibling directory named `matrix-engine-wgpu` for local development. The wrapper package and demo use a local file dependency:
+For development in this repository, the package and demo are configured to use a local sibling engine checkout:
 
 ```text
 ../matrix-engine-wgpu
 ```
 
-If your checkout uses another folder layout, update the `file:` paths in `me-webgpu-react/package.json` and `demo/package.json` to point to your local engine checkout. The published wrapper uses `matrix-engine-wgpu` as a peer dependency; the local file path is only for this repository's development/demo setup.
+Expected layout:
+
+```text
+workspace/
+  matrix-engine-wgpu/
+  me-webgpu-react/
+    me-webgpu-react/
+    demo/
+```
+
+If your folders differ, edit the `file:` dependency in `me-webgpu-react/package.json` and `demo/package.json` to point to your engine checkout. The local path is for development; the published wrapper declares `matrix-engine-wgpu` as a peer dependency.
+
+## Quick start
+
+Wrap the application in `MatrixEngineProvider` and mount `MatrixEngineCanvas`. The canvas initializes the engine and publishes the instance to the context.
+
+```tsx
+import React from 'react';
+import { createRoot } from 'react-dom/client';
+import {
+  MatrixEngineProvider,
+  MatrixEngineCanvas,
+  Mesh,
+  useMatrixEngineWGPU
+} from 'me-webgpu-react';
+
+function SceneControls() {
+  const engine = useMatrixEngineWGPU();
+
+  // The context is null before the canvas has initialized.
+  if (!engine) return null;
+
+  // Call engine APIs here, after initialization.
+  return null;
+}
+
+function App() {
+  return (
+    <MatrixEngineProvider>
+      <MatrixEngineCanvas
+        canvasId="canvas1"
+        canvasSize="fullscreen"
+        mainCameraParams={{ type: 'WASD', responseCoef: 1000 }}
+        onReady={(engine) => {
+          console.log('MatrixEngine ready', engine);
+        }}
+      >
+        <SceneControls />
+        <Mesh
+          name="exampleMesh"
+          position={[0, 1, -8]}
+          rotation={[0, 0, 0]}
+          rotationSpeed={[0, 0.2, 0]}
+          scale={[1, 1, 1]}
+          meshPath="/res/meshes/example.obj"
+          texturePath="/res/meshes/example.png"
+          physics={{ enabled: false }}
+        />
+      </MatrixEngineCanvas>
+    </MatrixEngineProvider>
+  );
+}
+
+createRoot(document.getElementById('root')!).render(<App />);
+```
+
+Use `onReady` for initialization that needs the engine instance. Keep GPU resources, scene objects and engine-specific update logic inside the engine lifecycle rather than creating them during React render.
+
+## React API
+
+### `MatrixEngineProvider`
+
+Provides the engine instance through `MatrixEngineWGPUContext`. Use one provider around the React application or scene area that needs access to the engine.
+
+### `useMatrixEngineWGPU()`
+
+React hook that returns the current engine instance from context. The value is initially `null`; check it before calling engine methods.
+
+```tsx
+const engine = useMatrixEngineWGPU();
+if (!engine) return null;
+```
+
+### `MatrixEngineWGPUContext`
+
+The exported React context used by the provider and canvas. Most applications should use the hook instead of consuming the context directly.
+
+### `injectEngineExternally(engine)`
+
+Updates the provider's engine state through the external setter when the provider is mounted. If the provider is not ready, the function logs a warning. This is an integration helper; prefer `MatrixEngineCanvas` and `onReady` for normal setup.
+
+### `MatrixEngineCanvas`
+
+Initializes a `MatrixEngineWGPU` instance in a container and provides it to descendants.
+
+| Prop | Type | Description |
+|---|---|---|
+| `canvasId` | `string` | Canvas DOM id; default `"canvas1"`. |
+| `canvasSize` | `"fullscreen" | { w: number; h: number }` | Canvas sizing configuration passed to the engine. |
+| `mainCameraParams` | `any` | Camera configuration passed to the engine; default is `{ type: 'WASD', responseCoef: 1000 }`. |
+| `clearColor` | `GPUColorDict | string` | Clear color passed to the engine. |
+| `onReady` | `(engine) => void` | Called with the initialized engine instance. |
+| `children` | `ReactNode` | React controls/components rendered once the engine is available. |
+
+`MatrixEngineCanvas` currently initializes the engine with `useSingleRenderPass: true` and calls `app.addLight()` during ready handling. If your application needs different engine initialization, use the engine constructor directly and integrate it with the provider.
+
+### Scene components
+
+These components add engine objects imperatively and return no DOM element.
+
+#### `Cube`
+
+Creates a cube mesh using the wrapper's default cube OBJ and texture.
+
+| Prop | Type | Default |
+|---|---|---|
+| `name` | `string` | `"myCube1"` |
+| `position` | `[number, number, number]` | `[0, 1, -5]` |
+| `rotation` | `[number, number, number]` | `[0, 0, 0]` |
+| `rotationSpeed` | `[number, number, number]` | `[0, 0, 0]` |
+| `texturePath` | `string` | `"/res/meshes/cube.png"` |
+| `scale` | `[number, number, number]` | `[1, 1, 1]` |
+| `physics` | `{ enabled: boolean; geometry?: TypeOfGeometry }` | `undefined` |
+| `raycast` | `boolean | { enabled: boolean; radius: number }` | `undefined` |
+
+#### `Ball`
+
+Creates a ball OBJ object with the wrapper's default ball mesh and texture. Supports `name`, `position`, `rotation`, `rotationSpeed`, `physics` and `color` props. Defaults: name `"myBall1"`, position `[0, 1, -15]`, zero rotation/speed, color `"white"`.
+
+#### `Mesh`
+
+Loads a mesh from an OBJ path. Supports `name`, `position`, `rotation`, `rotationSpeed`, `texturePath`, `scale`, `meshPath`, `physics` and `color`.
+
+Defaults: name `"myMesh1"`, position `[0, 1, -5]`, `meshPath="./res/meshes/cube.obj"`, texture path `"res/meshes/cube.png"`, scale `[1, 1, 1]`, zero rotation/speed, color `"white"`.
+
+#### `ObjsSeqAnim`
+
+Loads an OBJ sequence and attaches an animation configuration. Requires `objSeqArg` and `objAnim`; when either is missing, it logs an initialization error. It uses the engine's `makeObjSeqArg` helper and starts the `walk` animation after loading.
+
+Relevant props: `name`, `position`, `rotation`, `rotationSpeed`, `texturePath`, `scale`, `physics`, `raycast`, `objSeqArg`, `objAnim`.
+
+### Types
+
+`MeshProps` is exported from the scene component modules. `TypeOfGeometry` currently includes `Cube` and `Sphere`. `MatrixEngineCanvasProps` and `GPUColorDict` describe the canvas configuration and RGBA clear color.
+
+## Complete engine API reference
+
+The wrapper re-exports all named exports from `matrix-engine-wgpu`:
+
+```ts
+export * from 'matrix-engine-wgpu';
+```
+
+This means engine APIs can be imported directly from `me-webgpu-react`. The following list documents the current public entry point and groups the exports by purpose. It is a descriptive index, not a replacement for each API's exact constructor/method signature. Check the engine source and API docs for required arguments, GPU-device ownership and lifecycle details.
+
+### Engine, configuration and geometry
+
+| Export | Description |
+|---|---|
+| `MatrixEngineWGPU` | Main engine class; creates and manages the WebGPU scene/runtime. |
+| `MEConfig` | Engine configuration module/object. |
+| `GeometryFactory` | Geometry construction factory. |
+| `geometryTypes` | Available geometry type definitions. |
+| `geoTypesForMorph` | Geometry types used by mesh morphing. |
+| `MeshMorpher` | Procedural mesh morphing utility. |
+| `GenGeoTexture2` | Procedural geometry texture generation. |
+| `PVector` | Engine vector/math class. |
+
+### Cameras and camera controls
+
+| Export | Description |
+|---|---|
+| `FirstPersonCamera` | First-person camera controller. |
+| `PlaneCamera` | Camera controller for plane/2D-like scene navigation. |
+| `RPGCamera` | RPG/player-follow camera. |
+| `WASDCamera` | WASD-style camera controller. |
+| `CinematicCamera` | Camera for cinematic movement and sequencing. |
+| `CameraPath` | Camera path data/helper. |
+| `DragRotateController` | Drag-based object/camera rotation controller. |
+| `MobileDOM` | Mobile DOM/input helper. |
+| `FullScreenManagerElement` | Fullscreen management element/helper. |
+| `getOrientation` | Device orientation helper. |
+| `isMobile` | Mobile-device detection helper. |
+| `touchCoordinate` | Touch coordinate helper. |
+| `ORBIT` | Orbit/control constant or helper. |
+
+### Rendering, effects and post-processing
+
+| Export | Description |
+|---|---|
+| `KaleidoscopeEffect` | Kaleidoscope post-processing effect. |
+| `KaleidoscopePresets` | Preset configurations for the kaleidoscope effect. |
+| `KaleidoscopeEmitter` | Kaleidoscope effect instance/emitter. |
+| `CloudsVolumetric` | Volumetric cloud post-processing effect. |
+| `CloudsVolumetric2` | Alternate volumetric cloud implementation. |
+| `WaterSimEffect` | Water simulation effect. |
+| `WaterSimSphereEffect` | Spherical water simulation effect. |
+| `FlameEffect` | Flame visual effect. |
+| `FlameEmitter` | Flame emitter/controller. |
+| `ParticleActionEmitter` | Particle action emitter. |
+| `PointerEffect` | Pointer-driven visual effect. |
+| `ChartsEffect` | Chart/datagram visualization effect. |
+| `EarthquakeEffect` | Seismic/earthquake visualization effect. |
+| `BloodBurst` | Burst particle effect. |
+| `LaserProjectile` | Laser projectile effect. |
+| `DepthWebcamVoxelEffect` | Webcam depth/voxel effect. |
+| `SplatFaceEffect` | Gaussian-splat face effect. |
+| `AudioSplatFieldEffect` | Audio-reactive splat field effect. |
+| `HPBarEffect` | Health bar effect. |
+| `MANABarEffect` | Mana bar effect. |
+
+### Gaussian splats and sprites
+
+| Export | Description |
+|---|---|
+| `GaussianSplatLayer` | Gaussian splat layer for scene rendering. |
+| `GaussianSplatScene` | Gaussian splat scene container. |
+| `SplatColorAnimator` | Splat color animation utility. |
+| `SplatPositionAnimator` | Splat position animation utility. |
+| `SpriteInstance` | Sprite instance data/object. |
+| `SpritesPack2D` | 2D sprite pack/container. |
+| `initializeSpritesForMesh` | Initializes sprites associated with a mesh. |
+
+### Physics, collision, players and projectiles
+
+| Export | Description |
+|---|---|
+| `CollisionSystem` | Collision subsystem. |
+| `ProjectileSystem` | Projectile behavior/system. |
+| `InstancedKinematicOperations` | Kinematic operations for instanced objects. |
+| `Player` | Engine player object/plugin. |
+| `animateRotationY` | Scene-object Y-axis rotation animation helper. |
+| `SWITCHER` | Engine switcher utility/constant. |
+| `OSCILLATOR` | Oscillator utility/constant. |
+
+### Navigation and maps
+
+| Export | Description |
+|---|---|
+| `MapCreator` | Built-in map creation helper. |
+| `loadNavMesh` | Loads navigation mesh data. |
+| `followPath` | Navigation path-following helper. |
+
+### Networking, external data and speech
+
+| Export | Description |
+|---|---|
+| `MatrixStream` | Engine networking/stream class. |
+| `NativeWebRTC` | Native WebRTC networking integration. |
+| `ExternalDataHandler` | External data integration handler. |
+| `CoinGeckoAdapter` | CoinGecko data adapter. |
+| `SeismicPortalAdapter` | Seismic Portal data adapter. |
+| `MatrixTTS` | Text-to-speech helper. |
+| `mocapCsCmuEdu` | CMU motion-capture data export. |
+
+### Loading, raycasting and spatial queries
+
+| Export | Description |
+|---|---|
+| `downloadMeshes` | Loads OBJ mesh assets using the engine loader. |
+| `makeObjSeqArg` | Creates loader arguments for OBJ sequence animation. |
+| `uploadGLBModel` | GLB/glTF model upload/loading helper. |
+| `BVHSkeletal` | BVH skeletal animation loader/representation. |
+| `addRaycastsListener` | Registers the engine raycast listener. |
+| `addRaycastsAABBListener` | Registers raycast listener using AABB intersection. |
+| `getRayFromMouse` | Creates a ray from mouse coordinates. |
+| `getRayFromMouse2` | Alternate mouse-to-ray helper. |
+| `rayIntersectsSphere` | Ray/sphere intersection test. |
+| `rayIntersectsSphere2` | Alternate ray/sphere intersection test. |
+| `rayIntersectsAABB` | Ray/AABB intersection test. |
+| `computeAABB` | Computes an axis-aligned bounding box. |
+| `computeWorldVertsAndAABB` | Computes world vertices and bounds. |
+
+### General utilities
+
+| Export | Description |
+|---|---|
+| `byId` | DOM element lookup helper. |
+| `vecOf` | Vector creation/conversion helper. |
+| `randomIntFromTo` | Random integer in a range. |
+| `randomFloatFromTo` | Random float in a range. |
+| `getOrientation` | Device orientation helper. |
+| `isMobile` | Mobile detection helper. |
+| `FullScreenManagerElement` | Fullscreen helper. |
+| `mb` | Engine utility export. |
+
+> Some names above are engine-specific utility values or data exports rather than standalone classes. Their exact usage is defined by the engine source. The list is kept aligned with the current top-level `index.js`; the wrapper does not invent additional engine methods.
+
+## Engine lifecycle and usage notes
+
+1. **Wait for initialization.** `useMatrixEngineWGPU()` returns `null` before an engine is available. Use `onReady` for setup that requires the engine.
+2. **WebGPU is asynchronous.** GPU adapter/device availability depends on the browser, OS, driver and hardware.
+3. **Assets must be served.** OBJ, texture, GLB, BVH and other files must resolve from the URLs/paths expected by your engine configuration. Ensure your bundler or public directory serves them.
+4. **Physics setup is engine-specific.** Some wrapper components listen for the engine's `AmmoReady` event before adding objects. Configure the physics backend and assets as required by the engine version.
+5. **React unmount is not engine disposal.** The current canvas wrapper does not expose a dedicated dispose prop. If your application mounts/unmounts scenes repeatedly, manage engine/resource teardown explicitly or initialize the engine directly.
+6. **Avoid creating scene objects during render.** Use `onReady`, effects or engine callbacks so React re-renders do not duplicate imperative engine objects.
+7. **Check signatures in the engine.** This README gives purpose-level descriptions. Constructor arguments, object schemas and GPU resource ownership can vary between engine releases.
+
+## Showcase
+
+The `demo/` directory contains a Vite React presentation page with feature highlights and selectable example previews. Start it with:
+
+```bash
+cd demo
+npm install
+npm run dev
+```
+
+The showcase is a development/demo site, not part of the published library entry point.
+
+## Build and publish
 
 Build the wrapper:
 
@@ -38,76 +370,12 @@ npm install
 npm run build
 ```
 
-Run the showcase:
+The build emits JavaScript and declaration files to `dist/` and copies public runtime assets. Confirm that the installed engine dependency resolves correctly before publishing.
 
-```bash
-cd demo
-npm install
-npm run dev
-```
+## Browser requirements
 
-## Basic React setup
-
-```tsx
-import { MatrixEngineCanvas, Mesh, useMatrixEngineWGPU } from 'me-webgpu-react';
-
-function SceneControls() {
-  const engine = useMatrixEngineWGPU();
-  // Access engine scene APIs after the canvas initializes.
-  return null;
-}
-
-export default function App() {
-  return (
-    <MatrixEngineCanvas
-      canvasSize="fullscreen"
-      mainCameraParams={{ type: 'WASD', responseCoef: 1000 }}
-      onReady={(engine) => console.log('MatrixEngine ready', engine)}
-    >
-      <SceneControls />
-      <Mesh
-        position={[0, 0, -8]}
-        rotation={[0, 0, 0]}
-        rotationSpeed={[0, 0.2, 0]}
-        physics={{ enabled: false }}
-        meshPath="/res/my-meshes/example.obj"
-        scale={[1, 1, 1]}
-      />
-    </MatrixEngineCanvas>
-  );
-}
-```
-
-## Complete engine API
-
-All named exports from the installed `matrix-engine-wgpu` package are re-exported from `me-webgpu-react`. For example, use engine exports directly:
-
-```ts
-import {
-  MatrixEngineWGPU,
-  FirstPersonCamera,
-  RPGCamera,
-  CloudsVolumetric,
-  GaussianSplatLayer,
-  uploadGLBModel,
-  downloadMeshes,
-  GeometryFactory,
-  CollisionSystem
-} from 'me-webgpu-react';
-```
-
-The list above is illustrative; the engine's current `index.js` is the authoritative list. Engine functions that require a running engine, GPU device, canvas, asset paths or event setup still need to be called according to the engine documentation.
-
-## Showcase
-
-The `demo/` folder contains a React/Vite presentation page and six example previews. It is intended as a starter showcase and API exploration page; the examples require a browser with WebGPU support.
-
-## Links
-
-- [MatrixEngineWGPU source](https://github.com/zlatnaspirala/matrix-engine-wgpu)
-- [React wrapper source](https://github.com/zlatnaspirala/me-webgpu-react)
-- [Engine API documentation](https://maximumroulette.com/apps/webgpu/api-docs/)
+Use a browser with WebGPU support enabled and a compatible GPU/driver. WebGPU support and performance vary by browser, operating system and hardware. Provide a fallback or clear unsupported-browser message in production applications if WebGPU is unavailable.
 
 ## License
 
-MIT. See the repository license and engine/asset notices for their respective terms and attribution.
+MIT. See the repository license and the engine repository for their respective licenses, asset notices and attribution requirements.
