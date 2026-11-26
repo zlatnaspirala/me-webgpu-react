@@ -1,13 +1,12 @@
-export { MatrixEngineProvider, useMatrixEngineWGPU } from './MatrixEngineProvider';
+export { MatrixEngineProvider, useMatrixEngineWGPU, MatrixEngineWGPUContext, injectEngineExternally } from './MatrixEngineProvider';
 export { MatrixEngineCanvas } from './MatrixEngineCanvas';
 export { Cube } from './subComponents/cube';
 export { Ball } from './subComponents/ball';
 export { Mesh } from './subComponents/mesh';
 export { ObjsSeqAnim } from './subComponents/objSeqAnim';
 
-import { addRaycastsAABBListener, rayIntersectsAABB, addRaycastListener, getRayFromMouse, rayIntersectsSphere } from "matrix-engine-wgpu";
-export { addRaycastsAABBListener, addRaycastListener, rayIntersectsAABB, getRayFromMouse, rayIntersectsSphere };
-
-export { makeObjSeqArg } from "matrix-engine-wgpu";
-export { downloadMeshes } from "matrix-engine-wgpu";
-export { uploadGLBModel } from "matrix-engine-wgpu";
+// Re-export the engine's complete public entry point. This keeps the React
+// wrapper aligned with new cameras, effects, loaders, physics, networking,
+// splat tools, navigation, and utility exports without maintaining a stale list.
+// @ts-ignore matrix-engine-wgpu publishes its JavaScript entry point without declarations.
+export * from 'matrix-engine-wgpu';
