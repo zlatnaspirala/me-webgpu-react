@@ -1,14 +1,15 @@
 {
-  "name": "demo",
-  "version": "1.0.0",
+  "name": "matrix-engine-react-showcase",
+  "version": "2.0.0",
+  "private": true,
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview"
   },
   "dependencies": {
-    "matrix-engine-wgpu": "1.5.5",
-    "me-webgpu-react": "1.5.51",
+    "matrix-engine-wgpu": "file:../../matrix-engine-wgpu",
+    "me-webgpu-react": "file:../me-webgpu-react",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "wgpu-matrix": "^2.0.0"
