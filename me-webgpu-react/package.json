@@ -1,6 +1,7 @@
 {
   "name": "me-webgpu-react",
-  "version": "1.5.51",
+  "version": "2.0.0",
+  "description": "React wrapper and complete top-level API for MatrixEngine WebGPU",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -8,8 +9,8 @@
     "postbuild": "node copy.js"
   },
   "peerDependencies": {
-    "matrix-engine-wgpu": "1.5.5",
-    "react": "^18.3.1"
+    "matrix-engine-wgpu": "^2.0.1",
+    "react": "^18.3.1 || ^19.0.0"
   },
   "dependencies": {
     "wgpu-matrix": "^2.0.0"
@@ -18,19 +19,21 @@
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
     "fs-extra": "^11.3.0",
-    "matrix-engine-wgpu": "1.5.5",
+    "matrix-engine-wgpu": "file:../../matrix-engine-wgpu",
     "react": "^18.3.1",
-    "typescript": "^5.3.3",
-    "vite-plugin-static-copy": "^3.1.0"
+    "typescript": "^5.3.3"
   },
   "keywords": [
     "webgpu",
-    "webgpu-animation-objs",
-    "morph",
-    "obj-sequence",
-    "obj-loader",
+    "webgpu-react",
     "matrix-engine",
-    "matrix-engine-webgpu",
-    "reactjs"
+    "matrix-engine-wgpu",
+    "the-beast",
+    "reactjs",
+    "3d",
+    "gpu",
+    "webgpu-engine",
+    "webgpu-3d",
+    "webgpu-game-engine"
   ]
 }
