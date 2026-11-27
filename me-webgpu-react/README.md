@@ -220,6 +220,24 @@ engine revisions may expose a different render option name such as `GPUIndirectD
 the wrapper passes the string through exactly as provided and does not translate it.
 Use the option recognized by the MatrixEngineWGPU version you have installed.
 
+The current upstream `src/world.js` dispatches these render override values:
+
+| `render` value | Engine path |
+|---|---|
+| `'zero'` | `zeroPass` override |
+| `'nano'` | `nanoPass` override |
+| `'no-shadows'` | `noShadowPass` override |
+| `'mobile1'` | mobile-oriented render override |
+| `'culling'` | CPU `CulledRenderPass`; tune with `cullingRange` |
+| `'GPUInstancedDraw'` | GPU indirect renderer; tune with `GPUCullingRad` |
+
+Physics is also selected at the constructor level in engine demos: `useJolt`,
+`useAmmo`, `useCannon`, or `useMatter`. Use `dontUsePhysics: true` when a scene does
+not need a physics bridge. Other recurring top-level options include `MAX_SPOTLIGHTS`,
+`MAX_BONES`, `SHADOW_RES`, `CAM_SPEED`, `MOUSE_SENS`, `TOUCH_SENS`,
+`GRAVITY_Y_AXIS`, and physics ground dimensions. These are passed through by
+`engineOptions` without requiring wrapper releases for new engine options.
+
 `fastRender` is a resolution/performance scaling option, not a render-mode selector.
 The upstream demos use different values (for example `0.8`, `0.9`, and `0.95`) depending
 on the scene and performance target. Other constructor settings seen across demos include
