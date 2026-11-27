@@ -151,7 +151,10 @@ Initializes a `MatrixEngineWGPU` instance in a container and provides it to desc
 | `canvasSize` | `"fullscreen" | { w: number; h: number }` | Canvas sizing configuration passed to the engine. |
 | `mainCameraParams` | `any` | Camera configuration passed to the engine; default is `{ type: 'WASD', responseCoef: 1000 }`. |
 | `clearColor` | `GPUColorDict | string` | Clear color passed to the engine. |
-| `engineOptions` | `MatrixEngineWGPUOptions` | Passes every engine constructor option through unchanged, including rendering/culling modes and performance flags. |\n| `useSingleRenderPass` | `boolean` | Controls the engine single-render-pass option; defaults to `true`. |\n| `addDefaultLight` | `boolean` | Adds the wrapper's default light after initialization; defaults to `true`. Set false for demo-owned lighting. |\n| `onReady` | `(engine) => void` | Called with the initialized engine instance. |
+| `engineOptions` | `MatrixEngineWGPUOptions` | Passes every engine constructor option through unchanged, including rendering/culling modes and performance flags. |
+| `useSingleRenderPass` | `boolean` | Controls the engine single-render-pass option; defaults to `true`. |
+| `addDefaultLight` | `boolean` | Adds the wrapper's default light after initialization; defaults to `true`. Set false for demo-owned lighting. |
+| `onReady` | `(engine) => void` | Called with the initialized engine instance. |
 | `children` | `ReactNode` | React controls/components rendered once the engine is available. |
 
 `MatrixEngineCanvas` defaults to `useSingleRenderPass: true` and calls `app.addLight()` during ready handling. Both behaviors are configurable with `useSingleRenderPass` and `addDefaultLight`; use `engineOptions` for the rest of the engine's constructor API.
