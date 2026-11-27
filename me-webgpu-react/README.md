@@ -254,7 +254,9 @@ cover OBJ/GLB loading, procedural geometry, standard and instanced rendering, CP
 physics backends (Ammo.js, Jolt, cannon-es, Matter.js), raycasting, camera/video textures,
 skeletal and OBJ-sequence animation, Gaussian splats, water, particles, volumetric and bloom
 effects, navigation, audio-reactive rendering, hand/face/pose tracking, streaming, and game
-prototypes.\n\n#### What the current React demo pages cover
+prototypes.
+
+#### What the current React demo pages cover
 
 The wrapper's six current demo pages are introductory React examples, not a one-to-one port
 of the engine gallery:
