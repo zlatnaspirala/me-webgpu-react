@@ -51,7 +51,8 @@ export default function App() {
       <header className="showcase-nav">
         <a className="brand" href="#top"><span className="brand-mark">ME</span><span>MatrixEngine <b>React</b></span></a>
         <nav>
-          <a href="#features">Features</a>\n          <a href="#engine-profiles">Engine profiles</a>
+          <a href="#features">Features</a>
+          <a href="#engine-profiles">Engine profiles</a>
           <a href="#showcase">Showcase</a>
           <a href="https://github.com/zlatnaspirala/matrix-engine-wgpu" target="_blank" rel="noreferrer">Engine source ↗</a>
         </nav>
