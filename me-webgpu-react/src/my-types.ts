@@ -40,9 +40,32 @@ export type MeshProps = {
   };
 };
 
+/**
+ * Pass-through configuration for MatrixEngineWGPU's constructor.
+ * The index signature intentionally keeps every current and future engine option available.
+ */
+export type MatrixEngineWGPUOptions = {
+  fastRender?: number;
+  render?: string;
+  GPUCullingRad?: number;
+  cullingRange?: number;
+  dontUsePhysics?: boolean;
+  MAX_SPOTLIGHTS?: number;
+  MAX_BONES?: number;
+  useSingleRenderPass?: boolean;
+  canvasSize?: 'fullscreen' | { w: number; h: number };
+  mainCameraParams?: any;
+  clearColor?: GPUColorDict | string;
+  [option: string]: any;
+};
+
 export type MatrixEngineCanvasProps = {
   onReady?: (engine: any) => void;
+  /** Complete MatrixEngineWGPU constructor options; engine-specific settings are passed through unchanged. */
+  engineOptions?: MatrixEngineWGPUOptions;
   useSingleRenderPass?: boolean;
+  /** Set false when the demo configures its own lighting. Defaults to true for backwards compatibility. */
+  addDefaultLight?: boolean;
   canvasSize?: 'fullscreen' | { w: number; h: number };
   mainCameraParams?: any;
   clearColor?: GPUColorDict | string;
