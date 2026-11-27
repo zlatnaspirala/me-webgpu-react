@@ -34,6 +34,11 @@ const engineProfiles = [
     title: 'Mobile performance',
     description: 'Lower internal render resolution and a smaller CPU culling range.',
     options: { fastRender: 0.9, render: 'culling', cullingRange: 500, dontUsePhysics: true, MAX_SPOTLIGHTS: 1, MAX_BONES: 0 }
+  },
+  {
+    title: 'Mobile render override',
+    description: 'Use the engine mobile1 render override with its own fastRender scale.',
+    options: { fastRender: 0.85, render: 'mobile1', dontUsePhysics: true, MAX_SPOTLIGHTS: 1, MAX_BONES: 0 }
   }
 ];
 
@@ -46,7 +51,7 @@ export default function App() {
       <header className="showcase-nav">
         <a className="brand" href="#top"><span className="brand-mark">ME</span><span>MatrixEngine <b>React</b></span></a>
         <nav>
-          <a href="#features">Features</a>
+          <a href="#features">Features</a>\n          <a href="#engine-profiles">Engine profiles</a>
           <a href="#showcase">Showcase</a>
           <a href="https://github.com/zlatnaspirala/matrix-engine-wgpu" target="_blank" rel="noreferrer">Engine source ↗</a>
         </nav>
