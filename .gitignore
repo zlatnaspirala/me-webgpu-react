@@ -3,3 +3,4 @@ me-webgpu-react/node_modules/**
 demo/dist/**
 demo/dist/res/multilang/**
 demo/dist/res/**
+me-webgpu-react/package-lock.json
