@@ -157,7 +157,7 @@ Initializes a `MatrixEngineWGPU` instance in a container and provides it to desc
 | `onReady` | `(engine) => void` | Called with the initialized engine instance. |
 | `children` | `ReactNode` | React controls/components rendered once the engine is available. |
 
-`MatrixEngineCanvas` defaults to `useSingleRenderPass: true` and calls `app.addLight()` during ready handling. Both behaviors are configurable with `useSingleRenderPass` and `addDefaultLight`; use `engineOptions` for the rest of the engine's constructor API.
+`MatrixEngineCanvas` defaults to `useSingleRenderPass: true` and calls `app.addLight()` during ready handling. Both behaviors are configurable with `useSingleRenderPass` and `addDefaultLight`; use `engineOptions` for the rest of the engine's constructor API. The engine is created once on component mount; changing constructor options after mount does not recreate the WebGPU engine.
 
 ### Pass the complete engine constructor configuration
 
@@ -254,7 +254,30 @@ cover OBJ/GLB loading, procedural geometry, standard and instanced rendering, CP
 physics backends (Ammo.js, Jolt, cannon-es, Matter.js), raycasting, camera/video textures,
 skeletal and OBJ-sequence animation, Gaussian splats, water, particles, volumetric and bloom
 effects, navigation, audio-reactive rendering, hand/face/pose tracking, streaming, and game
-prototypes. The detailed, demo-by-demo index is maintained in the engine repository:
+prototypes. #### What the current React demo pages cover
+
+The wrapper's six current demo pages are introductory React examples, not a one-to-one port
+of the engine gallery:
+
+| React page | Current example approach |
+|---|---|
+| `demo1` | React canvas + primitive cube |
+| `demo2` | Cube with Ammo physics and engine access through context |
+| `demo3` | Physics object + raycast listener + React event cleanup |
+| `demo4` | Runtime mesh creation and physics event handling |
+| `demo5` | OBJ-sequence loading/animation, including imperative scene insertion |
+| `demo6` | GLB upload and engine-side GLB object creation |
+
+The advanced upstream demos still need their own React examples when you want to showcase
+their complete workflows: maze culling, maximum instancing, navmesh/path-following,
+volumetric/bloom setup, camera/video textures, procedural meshes, Gaussian splats,
+water, skeletal animation, particles, reactive audio, tracking/NUI, and stream rendering.
+Those demos differ in more than constructor flags: they also use async asset loading,
+per-canvas raycast event names, physics-ready events, engine update hooks, and custom
+scene setup. Keep those individual workflows intact when porting them; don't turn them
+into one generic component.
+
+The detailed, demo-by-demo index is maintained in the engine repository:
 [Examples Guide](https://github.com/zlatnaspirala/matrix-engine-wgpu/blob/main/about-examples.md).
 
 ### Scene components
