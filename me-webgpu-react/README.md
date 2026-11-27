@@ -148,9 +148,9 @@ Initializes a `MatrixEngineWGPU` instance in a container and provides it to desc
 | Prop | Type | Description |
 |---|---|---|
 | `canvasId` | `string` | Canvas DOM id; default `"canvas1"`. |
-| `canvasSize` | `"fullscreen" | { w: number; h: number }` | Canvas sizing configuration passed to the engine. |
+| `canvasSize` | `"fullscreen" \| { w: number; h: number }` | Canvas sizing configuration passed to the engine. |
 | `mainCameraParams` | `any` | Camera configuration passed to the engine; default is `{ type: 'WASD', responseCoef: 1000 }`. |
-| `clearColor` | `GPUColorDict | string` | Clear color passed to the engine. |
+| `clearColor` | `GPUColorDict \| string` | Clear color passed to the engine. |
 | `engineOptions` | `MatrixEngineWGPUOptions` | Passes every engine constructor option through unchanged, including rendering/culling modes and performance flags. |
 | `useSingleRenderPass` | `boolean` | Controls the engine single-render-pass option; defaults to `true`. |
 | `addDefaultLight` | `boolean` | Adds the wrapper's default light after initialization; defaults to `true`. Set false for demo-owned lighting. |
