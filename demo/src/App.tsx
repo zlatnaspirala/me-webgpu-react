@@ -19,6 +19,24 @@ const capabilities = [
   ['Advanced systems', 'Reach physics, collision, splat tools, navigation, networking and utility exports.']
 ];
 
+const engineProfiles = [
+  {
+    title: 'CPU culling',
+    description: 'CPU-side visibility filtering with a configurable culling range.',
+    options: { fastRender: 0.8, render: 'culling', cullingRange: 1200, dontUsePhysics: true, MAX_SPOTLIGHTS: 1, MAX_BONES: 0 }
+  },
+  {
+    title: 'GPU indirect / instanced',
+    description: 'GPU-driven indirect rendering path used by the current engine source.',
+    options: { fastRender: 0.8, render: 'GPUInstancedDraw', GPUCullingRad: 20, dontUsePhysics: true, MAX_SPOTLIGHTS: 1, MAX_BONES: 0 }
+  },
+  {
+    title: 'Mobile performance',
+    description: 'Lower internal render resolution and a smaller CPU culling range.',
+    options: { fastRender: 0.9, render: 'culling', cullingRange: 500, dontUsePhysics: true, MAX_SPOTLIGHTS: 1, MAX_BONES: 0 }
+  }
+];
+
 export default function App() {
   const [activeDemo, setActiveDemo] = useState(0);
   const demo = demos[activeDemo];
@@ -57,6 +75,15 @@ export default function App() {
         <div className="feature-grid">
           {capabilities.map(([title, description], index) => <article className="feature-card" key={title}><span className="feature-number">0{index + 1}</span><h3>{title}</h3><p>{description}</p></article>)}
         </div>
+      </section>
+
+      <section className="section profiles-section" id="engine-profiles">
+        <div className="section-heading"><p className="eyebrow">ENGINE CONFIGURATION</p><h2>Use the engine's real render paths.</h2><p>The React canvas forwards constructor options instead of locking every scene to one render setup.</p></div>
+        <div className="profile-grid">
+          {engineProfiles.map((item, index) => <button className={index === activeProfile ? 'profile-choice active' : 'profile-choice'} key={item.title} onClick={() => setActiveProfile(index)}><strong>{item.title}</strong><span>{item.description}</span></button>)}
+        </div>
+        <pre className="profile-code"><code>{profileCode}</code></pre>
+        <p className="profile-note">Use the exact render mode supported by your engine version. Current upstream source selects its GPU indirect renderer with <code>GPUInstancedDraw</code>; the implementation is <code>GPUIndirectDraws</code>.</p>
       </section>
 
       <section className="section showcase-section" id="showcase">
