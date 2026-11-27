@@ -44,7 +44,10 @@ const engineProfiles = [
 
 export default function App() {
   const [activeDemo, setActiveDemo] = useState(0);
+  const [activeProfile, setActiveProfile] = useState(0);
   const demo = demos[activeDemo];
+  const profile = engineProfiles[activeProfile];
+  const profileCode = `<MatrixEngineCanvas engineOptions={${JSON.stringify(profile.options, null, 2)}} />`;
 
   return (
     <main className="showcase-shell">
