@@ -151,10 +151,90 @@ Initializes a `MatrixEngineWGPU` instance in a container and provides it to desc
 | `canvasSize` | `"fullscreen" | { w: number; h: number }` | Canvas sizing configuration passed to the engine. |
 | `mainCameraParams` | `any` | Camera configuration passed to the engine; default is `{ type: 'WASD', responseCoef: 1000 }`. |
 | `clearColor` | `GPUColorDict | string` | Clear color passed to the engine. |
-| `onReady` | `(engine) => void` | Called with the initialized engine instance. |
+| `engineOptions` | `MatrixEngineWGPUOptions` | Passes every engine constructor option through unchanged, including rendering/culling modes and performance flags. |\n| `useSingleRenderPass` | `boolean` | Controls the engine single-render-pass option; defaults to `true`. |\n| `addDefaultLight` | `boolean` | Adds the wrapper's default light after initialization; defaults to `true`. Set false for demo-owned lighting. |\n| `onReady` | `(engine) => void` | Called with the initialized engine instance. |
 | `children` | `ReactNode` | React controls/components rendered once the engine is available. |
 
-`MatrixEngineCanvas` currently initializes the engine with `useSingleRenderPass: true` and calls `app.addLight()` during ready handling. If your application needs different engine initialization, use the engine constructor directly and integrate it with the provider.
+`MatrixEngineCanvas` defaults to `useSingleRenderPass: true` and calls `app.addLight()` during ready handling. Both behaviors are configurable with `useSingleRenderPass` and `addDefaultLight`; use `engineOptions` for the rest of the engine's constructor API.
+
+### Pass the complete engine constructor configuration
+
+The wrapper must not restrict MatrixEngineWGPU to a small React-specific prop list. Use
+`engineOptions` to pass **any top-level constructor option** supported by your installed engine.
+The wrapper forwards this object without renaming or filtering engine settings.
+
+```tsx
+<MatrixEngineCanvas
+  canvasSize="fullscreen"
+  engineOptions={{
+    fastRender: 0.8,
+    render: 'GPUInstancedDraw',
+    GPUCullingRad: 20,
+    dontUsePhysics: true,
+    MAX_SPOTLIGHTS: 1,
+    MAX_BONES: 0,
+    mainCameraParams: {
+      type: 'firstPersonCamera',
+      responseCoef: 1000
+    }
+  }}
+  onReady={(app) => {
+    // Continue with the demo's own scene setup.
+  }}
+/>
+```
+
+The existing dedicated props (`canvasSize`, `mainCameraParams`, `clearColor`, `canvasId`)
+override the corresponding values in `engineOptions` when supplied. The wrapper keeps
+`useSingleRenderPass` enabled by default for backwards compatibility; set
+`useSingleRenderPass={false}` or pass `engineOptions={{ useSingleRenderPass: false }}`
+when your engine setup needs the other path. Set `addDefaultLight={false}` when the demo
+creates and configures its own lights.
+
+#### Rendering profiles found in the engine demos
+
+These are distinct engine paths, not interchangeable React settings:
+
+```tsx
+// CPU culling profile (range is engine-version dependent).
+<MatrixEngineCanvas engineOptions={{
+  fastRender: 0.8,
+  render: 'culling',
+  cullingRange: 1200,
+  dontUsePhysics: true
+}} />
+
+// GPU indirect/instanced culling profile used by the current engine source.
+<MatrixEngineCanvas engineOptions={{
+  fastRender: 0.8,
+  render: 'GPUInstancedDraw',
+  GPUCullingRad: 20,
+  dontUsePhysics: true,
+  MAX_SPOTLIGHTS: 1,
+  MAX_BONES: 0
+}} />
+```
+
+The engine source currently dispatches its GPU indirect renderer through
+`render: 'GPUInstancedDraw'` (the implementation is `GPUIndirectDraws`). Some demos or
+engine revisions may expose a different render option name such as `GPUIndirectDraw`;
+the wrapper passes the string through exactly as provided and does not translate it.
+Use the option recognized by the MatrixEngineWGPU version you have installed.
+
+`fastRender` is a resolution/performance scaling option, not a render-mode selector.
+The upstream demos use different values (for example `0.8`, `0.9`, and `0.95`) depending
+on the scene and performance target. Other constructor settings seen across demos include
+`dontUsePhysics`, `MAX_SPOTLIGHTS`, `MAX_BONES`, camera type/response, `GPUCullingRad`,
+and `cullingRange`. Keep these scene-specific; the wrapper does not impose one profile.
+
+#### Upstream demo coverage
+
+The engine gallery contains 50 wired demo IDs plus additional source experiments. The examples
+cover OBJ/GLB loading, procedural geometry, standard and instanced rendering, CPU/GPU culling,
+physics backends (Ammo.js, Jolt, cannon-es, Matter.js), raycasting, camera/video textures,
+skeletal and OBJ-sequence animation, Gaussian splats, water, particles, volumetric and bloom
+effects, navigation, audio-reactive rendering, hand/face/pose tracking, streaming, and game
+prototypes. The detailed, demo-by-demo index is maintained in the engine repository:
+[Examples Guide](https://github.com/zlatnaspirala/matrix-engine-wgpu/blob/main/about-examples.md).
 
 ### Scene components
 
