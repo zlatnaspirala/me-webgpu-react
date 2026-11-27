@@ -12,23 +12,27 @@ export const MatrixEngineCanvas: React.FC<MatrixEngineCanvasPropsWithChildren>=(
   canvasId="canvas1",
   canvasSize,
   clearColor,
-  mainCameraParams={ type: 'WASD', responseCoef: 1000 } }) => {
+  mainCameraParams,
+  engineOptions={},
+  useSingleRenderPass=engineOptions.useSingleRenderPass ?? true,
+  addDefaultLight=true }) => {
   const containerRef=useRef<HTMLDivElement>(null);
   const [engine, setEngine]=useState<any>(null);
 
   useEffect(() => {
     if(!engine&&containerRef.current) {
       const app=new MatrixEngineWGPU({
+        ...engineOptions,
         appendTo: containerRef.current,
-        useSingleRenderPass: true,
-        canvasSize: canvasSize,
-        mainCameraParams: mainCameraParams,
-        clearColor: clearColor,
-        canvasId: canvasId
+        useSingleRenderPass,
+        canvasSize: canvasSize ?? engineOptions.canvasSize,
+        mainCameraParams: mainCameraParams ?? engineOptions.mainCameraParams ?? { type: 'WASD', responseCoef: 1000 },
+        clearColor: clearColor ?? engineOptions.clearColor,
+        canvasId
       }, () => {
         setEngine(app);
         injectEngineExternally(app);
-        app.addLight();
+        if(addDefaultLight) app.addLight();
         setTimeout(() => { onReady?.(app); }, 1000);
       });
     }
