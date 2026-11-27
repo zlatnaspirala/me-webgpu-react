@@ -46,12 +46,27 @@ export type MeshProps = {
  */
 export type MatrixEngineWGPUOptions = {
   fastRender?: number;
-  render?: string;
+  render?: 'zero' | 'nano' | 'no-shadows' | 'mobile1' | 'culling' | 'GPUInstancedDraw' | 'GPUIndirectDraw' | string;
   GPUCullingRad?: number;
   cullingRange?: number;
+  fastRenderAlternative?: boolean;
   dontUsePhysics?: boolean;
+  useJolt?: boolean;
+  useAmmo?: boolean;
+  useCannon?: boolean;
+  useMatter?: boolean;
+  alphaMode?: 'opaque' | 'premultiplied';
   MAX_SPOTLIGHTS?: number;
   MAX_BONES?: number;
+  SHADOW_RES?: number;
+  CAM_SPEED?: number;
+  MOUSE_SENS?: number;
+  TOUCH_SENS?: number;
+  GRAVITY_Y_AXIS?: number;
+  PHYSICS_GROUND_Y?: number;
+  PHYSICS_GROUND_BYX?: number;
+  PHYSICS_GROUND_BYZ?: number;
+  LOAD_AFTER_CLICK_MOBILE?: boolean;
   useSingleRenderPass?: boolean;
   canvasSize?: 'fullscreen' | { w: number; h: number };
   mainCameraParams?: any;
